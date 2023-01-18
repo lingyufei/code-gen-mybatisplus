@@ -1,6 +1,8 @@
 package com.lyf.service.impl;
 
 import com.alibaba.fastjson.JSON;
+import com.lyf.core.generator.GeneratorFacade;
+import com.lyf.core.model.to.GenerationRequestInfoTo;
 import com.lyf.dao.MySQLDatabaseInfoDao;
 import com.lyf.exception.BusinessException;
 import com.lyf.model.dto.request.TableConfigRequest;
@@ -15,10 +17,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.lyf.constant.ExceptionCodeEnum.FORM_VALID_EXCEPTION;
@@ -78,12 +77,19 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
             throw new BusinessException("", FORM_VALID_EXCEPTION, JSON.toJSONString(tableConfigRequests));
         }
 
+        List<GenerationRequestInfoTo> generationRequestInfos = new ArrayList<>();
+
         //进行数据转换
         for (TableConfigRequest tableConfigRequest : tableConfigRequests) {
-            //获取改表的详细信息
+            String tableName = tableConfigRequest.getTableName();
+            //获取表的所以普详细信息
+            TableInfoEntity tableInfoEntity = mySQLDatabaseInfoDao.queryTable(tableName);
+            List<ColumnInfoEntity> columnInfoEntities = mySQLDatabaseInfoDao.queryColumns(tableName);
 
+            generationRequestInfos.add(
+                    new GenerationRequestInfoTo(tableName, tableConfigRequest, tableInfoEntity, columnInfoEntities));
         }
 
-
+        GeneratorFacade.Generate(generationRequestInfos);
     }
 }
