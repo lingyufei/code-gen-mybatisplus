@@ -1,4 +1,4 @@
-package com.lyf.utils;
+package com.lyf.constant;
 
 public enum ExceptionCodeEnum {
     SUCCESS(200, "success"),

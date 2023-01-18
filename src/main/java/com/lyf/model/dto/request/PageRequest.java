@@ -8,7 +8,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.Map;
 
-import static com.lyf.utils.ExceptionCodeEnum.FORM_VALID_EXCEPTION;
+import static com.lyf.constant.ExceptionCodeEnum.FORM_VALID_EXCEPTION;
 
 /**
  * 分页请求

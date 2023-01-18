@@ -1,5 +1,6 @@
 package com.lyf.utils;
 
+import com.lyf.constant.ExceptionCodeEnum;
 import com.lyf.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
@@ -11,8 +12,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.lyf.utils.ExceptionCodeEnum.DB_DUPLICATE_KEY_EXCEPTION;
-import static com.lyf.utils.ExceptionCodeEnum.SERVER_EXCEPTION;
+import static com.lyf.constant.ExceptionCodeEnum.DB_DUPLICATE_KEY_EXCEPTION;
+import static com.lyf.constant.ExceptionCodeEnum.SERVER_EXCEPTION;
 
 /**
  * @author LYF_

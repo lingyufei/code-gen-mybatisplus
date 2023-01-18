@@ -1,6 +1,6 @@
 package com.lyf.exception;
 
-import com.lyf.utils.ExceptionCodeEnum;
+import com.lyf.constant.ExceptionCodeEnum;
 
 /**
  * @author LYF_
