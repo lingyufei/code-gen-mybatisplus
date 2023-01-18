@@ -1,5 +1,6 @@
 package com.lyf.dao;
 
+import com.lyf.model.entity.ColumnInfoEntity;
 import com.lyf.model.entity.TableInfoEntity;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -20,6 +21,6 @@ public interface MySQLDatabaseInfoDao {
 
     TableInfoEntity queryTable(@Param("tableName") String tableName);
 
-    List<Map<String, String>> queryColumns(String tableName);
+    List<ColumnInfoEntity> queryColumns(String tableName);
 
 }

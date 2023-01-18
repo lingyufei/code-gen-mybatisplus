@@ -1,5 +1,6 @@
 package com.lyf;
 
+import com.lyf.model.dto.response.ColumnInfoResponse;
 import com.lyf.model.dto.response.TableInfoResponse;
 import com.lyf.model.entity.TableInfoEntity;
 import com.lyf.service.MySQLDatabaseInfoService;
@@ -20,12 +21,18 @@ class CodeGenMybatisplusApplicationTests {
     }
 
     @Test
-    void testMySQLDatabaseInfoService(){
+    void testTableService(){
 //        TableInfoEntity tableInfoEntity = mySQLDatabaseInfoService.queryTable("user_info");
 //        System.out.println(tableInfoEntity);
 
-        List<TableInfoResponse> tableInfoResponses = mySQLDatabaseInfoService.queryAll(null);
+        List<TableInfoResponse> tableInfoResponses = mySQLDatabaseInfoService.queryAllTable(null);
         System.out.println(tableInfoResponses);
+    }
+
+    @Test
+    void testColumnService(){
+        List<ColumnInfoResponse> columnInfoResponses = mySQLDatabaseInfoService.queryColumnsOfTable("user_info");
+        System.out.println(columnInfoResponses);
     }
 
 }
