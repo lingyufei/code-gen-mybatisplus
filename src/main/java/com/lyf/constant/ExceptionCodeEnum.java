@@ -11,6 +11,9 @@ public enum ExceptionCodeEnum {
     //20开头，数据库通用异常
     DB_DUPLICATE_KEY_EXCEPTION(2001, "您要添加的数据已存在");
 
+    //30开头，数据生成请求 异常
+//    CODEGEN_DUPLICATE_KEY_EXCEPTION(2001, "您要添加的数据已存在");
+
     private final Integer code;
     private final String msg;
 

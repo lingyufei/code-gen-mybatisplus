@@ -1,6 +1,9 @@
 package com.lyf.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.lyf.dao.MySQLDatabaseInfoDao;
+import com.lyf.exception.BusinessException;
+import com.lyf.model.dto.request.TableConfigRequest;
 import com.lyf.model.dto.response.ColumnInfoResponse;
 import com.lyf.model.dto.response.TableInfoResponse;
 import com.lyf.model.entity.ColumnInfoEntity;
@@ -10,12 +13,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.lyf.constant.ExceptionCodeEnum.FORM_VALID_EXCEPTION;
 
 @Service("mySQLDatabaseInfoService")
 public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
@@ -56,5 +62,28 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
     public List<ColumnInfoResponse> queryColumnsOfTable(String tableName) {
         List<ColumnInfoEntity> columnInfoEntities = mySQLDatabaseInfoDao.queryColumns(tableName);
         return columnInfoEntities.stream().map(ColumnInfoResponse::new).collect(Collectors.toList());
+    }
+
+    /**
+     * 代码生成
+     * @param tableConfigRequests
+     */
+    @Override
+    public void generate(List<TableConfigRequest> tableConfigRequests) {
+        //校验，过滤空数据
+        tableConfigRequests = tableConfigRequests.stream().filter(tableConfigRequest -> {
+            return StringUtils.hasText(tableConfigRequest.getTableName());
+        }).collect(Collectors.toList());
+        if(CollectionUtils.isEmpty(tableConfigRequests)){
+            throw new BusinessException("", FORM_VALID_EXCEPTION, JSON.toJSONString(tableConfigRequests));
+        }
+
+        //进行数据转换
+        for (TableConfigRequest tableConfigRequest : tableConfigRequests) {
+            //获取改表的详细信息
+
+        }
+
+
     }
 }

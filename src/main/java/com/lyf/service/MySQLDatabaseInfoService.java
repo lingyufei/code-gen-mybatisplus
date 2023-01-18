@@ -1,5 +1,6 @@
 package com.lyf.service;
 
+import com.lyf.model.dto.request.TableConfigRequest;
 import com.lyf.model.dto.response.ColumnInfoResponse;
 import com.lyf.model.dto.response.TableInfoResponse;
 import com.lyf.model.entity.ColumnInfoEntity;
@@ -16,4 +17,7 @@ public interface MySQLDatabaseInfoService {
     public Map<String, List<ColumnInfoResponse>> queryColumnsOfAllTables(List<String> tableNames);
 
     List<ColumnInfoResponse> queryColumnsOfTable(String tableName);
+
+    void generate(List<TableConfigRequest> tableConfigRequests);
+
 }
