@@ -1,4 +1,4 @@
-package com.lyf.core.model.schema;
+package com.lyf.core.schema;
 
 import com.lyf.core.model.enums.DataTypeEnum;
 import com.lyf.model.dto.request.ColumnConfigRequest;

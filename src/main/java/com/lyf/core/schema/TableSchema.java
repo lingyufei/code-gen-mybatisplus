@@ -1,4 +1,4 @@
-package com.lyf.core.model.schema;
+package com.lyf.core.schema;
 
 import com.lyf.utils.StringUtils;
 

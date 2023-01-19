@@ -1,6 +1,6 @@
 package com.lyf.core.generator;
 
-import com.lyf.core.model.schema.TableSchema;
+import com.lyf.core.schema.TableSchema;
 import com.lyf.core.model.to.GenerationRequestInfoTo;
 import com.lyf.model.dto.request.TableConfigRequest;
 import com.lyf.model.entity.ColumnInfoEntity;
