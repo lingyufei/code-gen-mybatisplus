@@ -18,4 +18,5 @@ public interface MySQLDatabaseInfoService {
 
     void generate(ConfigRequest configRequest);
 
+    void generateByDefault(ConfigRequest configRequest);
 }
