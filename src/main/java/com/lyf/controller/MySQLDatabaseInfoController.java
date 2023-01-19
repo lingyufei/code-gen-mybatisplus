@@ -2,6 +2,7 @@ package com.lyf.controller;
 
 import com.alibaba.fastjson.JSON;
 import com.lyf.exception.BusinessException;
+import com.lyf.model.dto.request.ConfigRequest;
 import com.lyf.model.dto.request.TableConfigRequest;
 import com.lyf.model.dto.response.ColumnInfoResponse;
 import com.lyf.model.dto.response.TableInfoResponse;
@@ -36,11 +37,11 @@ public class MySQLDatabaseInfoController {
     }
 
     @PostMapping("/generate")
-    public R generate(@RequestBody List<TableConfigRequest> tableConfigRequests){
-        if(CollectionUtils.isEmpty(tableConfigRequests)){
-            throw new BusinessException("", FORM_VALID_EXCEPTION, JSON.toJSONString(tableConfigRequests));
+    public R generate(@RequestBody ConfigRequest configRequest){
+        if(CollectionUtils.isEmpty(configRequest.getTableConfigRequestList())){
+            throw new BusinessException("", FORM_VALID_EXCEPTION, JSON.toJSONString(configRequest));
         }
-        mySQLDatabaseInfoService.generate(tableConfigRequests);
+        mySQLDatabaseInfoService.generate(configRequest);
         return R.ok();
     }
 }

@@ -18,11 +18,14 @@ public class TableSchema {
     //包名
     private String packageName;
 
+    private String author;
+
     private String tableComment;
 
     List<ColumnSchema> columnSchemaList;
 
-    public TableSchema(String tableName, String packageName, List<ColumnSchema> columnSchemaList, String tableComment) {
+    public TableSchema(String tableName, String packageName, List<ColumnSchema> columnSchemaList,
+                       String tableComment,String author) {
         this.tableName = tableName;
         this.lowerCamelName = StringUtils.LowerUnderscoreToLowerCamel(tableName);
         this.upperCamelName = StringUtils.LowerUnderScoreToUpperCamel(tableName);
@@ -31,18 +34,16 @@ public class TableSchema {
         }else{
             this.packageName = Constant.DEFAULT_PACKAGE;
         }
+
+        if(org.springframework.util.StringUtils.hasText(author)){
+            this.author = author;
+        }else{
+            this.author = Constant.DEFAULT_AUTHOR;
+        }
+
         this.packageName = packageName;
         this.columnSchemaList = columnSchemaList;
         this.tableComment = tableComment;
-    }
-
-    public TableSchema(String tableName, List<ColumnSchema> columnSchemaList, String tableComment) {
-        this.tableName = tableName;
-        this.lowerCamelName = StringUtils.LowerUnderscoreToLowerCamel(tableName);
-        this.upperCamelName = StringUtils.LowerUnderScoreToUpperCamel(tableName);
-        this.columnSchemaList = columnSchemaList;
-        this.tableComment = tableComment;
-        this.packageName = Constant.DEFAULT_PACKAGE;
     }
 
     public String getTableComment() {
@@ -103,5 +104,13 @@ public class TableSchema {
 
     public void setColumnSchemaList(List<ColumnSchema> columnSchemaList) {
         this.columnSchemaList = columnSchemaList;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

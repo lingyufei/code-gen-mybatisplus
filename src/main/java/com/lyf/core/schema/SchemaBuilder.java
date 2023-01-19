@@ -47,7 +47,8 @@ public class SchemaBuilder {
         List<ColumnInfoEntity> columnInfoEntities = generationRequestInfoTo.getColumnInfoEntities();
 
         String tableName = tableInfoEntity.getTableName();
-        String packageName = tableConfigRequest.getPackageName();
+        String packageName = generationRequestInfoTo.getPackageName();
+        String author = generationRequestInfoTo.getAuthor();
         String tableComment = tableInfoEntity.getTableComment();
         Map<String, ColumnInfoEntity> columnInfoEntityMap = columnInfoEntities.stream().collect(Collectors.toMap(ColumnInfoEntity::getColumnName, e -> e));
 
@@ -68,7 +69,7 @@ public class SchemaBuilder {
             columnSchemas.add(BuildColumnSchema(columnConfigRequest, columnInfoEntity));
         }
 
-        return new TableSchema(tableName, packageName, columnSchemas, tableComment);
+        return new TableSchema(tableName, packageName, columnSchemas, tableComment, author);
     }
 
     /**
@@ -82,14 +83,15 @@ public class SchemaBuilder {
         List<ColumnInfoEntity> columnInfoEntities = generationRequestInfoTo.getColumnInfoEntities();
 
         String tableName = tableInfoEntity.getTableName();
-        String packageName = Constant.DEFAULT_PACKAGE;
+        String packageName = generationRequestInfoTo.getPackageName();
+        String author = generationRequestInfoTo.getAuthor();
         String tableComment = tableInfoEntity.getTableComment();
 
         List<ColumnSchema> columnSchemas = new ArrayList<>();
         for (ColumnInfoEntity columnInfoEntity : columnInfoEntities) {
             columnSchemas.add(BuildColumnSchema(columnInfoEntity));
         }
-        return new TableSchema(tableName, packageName, columnSchemas, tableComment);
+        return new TableSchema(tableName, packageName, columnSchemas, tableComment, author);
     }
 
     public static List<TableSchema> BuildDefaultSchema(List<GenerationRequestInfoTo> generationRequestInfoTos){

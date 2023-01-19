@@ -8,15 +8,21 @@ import java.util.List;
 
 public class GenerationRequestInfoTo {
     private String tableName;
+    private String packageName;
+    private String author;
     private TableConfigRequest tableConfigRequest;
     private TableInfoEntity tableInfoEntity;
     private List<ColumnInfoEntity> columnInfoEntities;
 
-    public GenerationRequestInfoTo(String tableName, TableConfigRequest tableConfigRequest, TableInfoEntity tableInfoEntity, List<ColumnInfoEntity> columnInfoEntities) {
+    public GenerationRequestInfoTo(String tableName, TableConfigRequest tableConfigRequest,
+                                   TableInfoEntity tableInfoEntity, List<ColumnInfoEntity> columnInfoEntities,
+                                   String packageName, String author) {
         this.tableName = tableName;
         this.tableConfigRequest = tableConfigRequest;
         this.tableInfoEntity = tableInfoEntity;
         this.columnInfoEntities = columnInfoEntities;
+        this.author = author;
+        this.packageName = packageName;
     }
 
     public String getTableName() {
@@ -33,5 +39,13 @@ public class GenerationRequestInfoTo {
 
     public List<ColumnInfoEntity> getColumnInfoEntities() {
         return columnInfoEntities;
+    }
+
+    public String getPackageName() {
+        return packageName;
+    }
+
+    public String getAuthor() {
+        return author;
     }
 }

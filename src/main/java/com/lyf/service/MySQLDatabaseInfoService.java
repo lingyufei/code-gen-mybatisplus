@@ -1,10 +1,8 @@
 package com.lyf.service;
 
-import com.lyf.model.dto.request.TableConfigRequest;
+import com.lyf.model.dto.request.ConfigRequest;
 import com.lyf.model.dto.response.ColumnInfoResponse;
 import com.lyf.model.dto.response.TableInfoResponse;
-import com.lyf.model.entity.ColumnInfoEntity;
-import com.lyf.model.entity.TableInfoEntity;
 
 import java.util.List;
 import java.util.Map;
@@ -18,6 +16,6 @@ public interface MySQLDatabaseInfoService {
 
     List<ColumnInfoResponse> queryColumnsOfTable(String tableName);
 
-    void generate(List<TableConfigRequest> tableConfigRequests);
+    void generate(ConfigRequest configRequest);
 
 }

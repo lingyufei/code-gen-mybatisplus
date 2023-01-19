@@ -9,7 +9,8 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class TableConfigRequest {
-    private String tableName;
-    private List<ColumnConfigRequest> ColumnConfigRequests;
+public class ConfigRequest {
+    private String packageName;
+    private String author;
+    List<TableConfigRequest> tableConfigRequestList;
 }
