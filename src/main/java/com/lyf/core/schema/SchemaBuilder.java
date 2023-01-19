@@ -74,9 +74,19 @@ public class SchemaBuilder {
 
     /**
      * 默认全部生成
-     * @param generationRequestInfoTo
+     * @param generationRequestInfoTos
      * @return
      */
+    public static List<TableSchema> BuildDefaultSchema(List<GenerationRequestInfoTo> generationRequestInfoTos){
+        //所有信息进行类型转换，汇聚成一个统一的 Schema
+        List<TableSchema> tableSchemaList = generationRequestInfoTos.stream()
+                .map(SchemaBuilder::BuildDefaultSchema)
+                .filter(e -> !CollectionUtils.isEmpty(e.columnSchemaList))
+                .collect(Collectors.toList());
+        log.info("create tableSchema from generationRequestInfoTos successfully");
+        return tableSchemaList;
+    }
+
     public static TableSchema BuildDefaultSchema(GenerationRequestInfoTo generationRequestInfoTo){
 //        TableConfigRequest tableConfigRequest = generationRequestInfoTo.getTableConfigRequest();
         TableInfoEntity tableInfoEntity = generationRequestInfoTo.getTableInfoEntity();
@@ -92,16 +102,6 @@ public class SchemaBuilder {
             columnSchemas.add(BuildColumnSchema(columnInfoEntity));
         }
         return new TableSchema(tableName, packageName, columnSchemas, tableComment, author);
-    }
-
-    public static List<TableSchema> BuildDefaultSchema(List<GenerationRequestInfoTo> generationRequestInfoTos){
-        //所有信息进行类型转换，汇聚成一个统一的 Schema
-        List<TableSchema> tableSchemaList = generationRequestInfoTos.stream()
-                .map(SchemaBuilder::BuildDefaultSchema)
-                .filter(e -> !CollectionUtils.isEmpty(e.columnSchemaList))
-                .collect(Collectors.toList());
-        log.info("create tableSchema from generationRequestInfoTos successfully");
-        return tableSchemaList;
     }
 
     /**

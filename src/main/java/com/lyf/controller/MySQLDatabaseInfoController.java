@@ -44,4 +44,10 @@ public class MySQLDatabaseInfoController {
         mySQLDatabaseInfoService.generate(configRequest);
         return R.ok();
     }
+
+    @PostMapping("/generate/default")
+    public R generateByDefault(@RequestBody ConfigRequest configRequest){
+        mySQLDatabaseInfoService.generateByDefault(configRequest);
+        return R.ok();
+    }
 }

@@ -103,4 +103,21 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
 
         List<StringWriterResultTo> resultToList = generatorFacade.generateByRequest(generationRequestInfos);
     }
+
+    @Override
+    public void generateByDefault(ConfigRequest configRequest) {
+        String packageName = Optional.ofNullable(configRequest.getPackageName()).orElse(Constant.DEFAULT_PACKAGE);
+        String author = Optional.ofNullable(configRequest.getAuthor()).orElse(Constant.DEFAULT_PACKAGE);
+
+        List<TableInfoEntity> tableInfoEntities = mySQLDatabaseInfoDao.queryList(null);
+        List<GenerationRequestInfoTo> generationRequestInfos = new ArrayList<>();
+        for (TableInfoEntity tableInfoEntity : tableInfoEntities) {
+            String tableName = tableInfoEntity.getTableName();
+            List<ColumnInfoEntity> columnInfoEntities = mySQLDatabaseInfoDao.queryColumns(tableName);
+            generationRequestInfos.add(
+                    new GenerationRequestInfoTo(tableName, null, tableInfoEntity, columnInfoEntities, author, packageName));
+        }
+
+        List<StringWriterResultTo> resultTos = generatorFacade.generateByDefault(generationRequestInfos);
+    }
 }
