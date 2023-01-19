@@ -31,6 +31,12 @@ public class GeneratorFacade implements Generator{
         return doGenerate(tableSchemas);
     }
 
+    public List<StringWriterResultTo> generateByDefault(List<GenerationRequestInfoTo> generationRequestInfoTos){
+        List<TableSchema> tableSchemas = SchemaBuilder.BuildDefaultSchema(generationRequestInfoTos);
+
+        return doGenerate(tableSchemas);
+    }
+
     public List<StringWriterResultTo> doGenerate(List<TableSchema> tableSchemaList){
         List<StringWriterResultTo> result = new ArrayList<>();
 

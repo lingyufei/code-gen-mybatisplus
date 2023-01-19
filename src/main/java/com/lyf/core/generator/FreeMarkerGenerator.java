@@ -33,14 +33,10 @@ public class FreeMarkerGenerator implements Generator{
             temp = configuration.getTemplate(fileName);
             temp.process(tableSchema, stringWriter);
 
-            //处理文件名
-
-
             return Optional.of(new StringWriterResultTo(path, stringWriter));
         } catch (IOException | TemplateException e) {
             log.warn("[{}] processing exception, [{}]", fileName, e);
             return Optional.empty();
         }
-
     }
 }

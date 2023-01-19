@@ -87,9 +87,9 @@ public class TableSchema {
 
     public String getPackagePath() {
         if(org.springframework.util.StringUtils.hasText(packageName)){
-            return packageName.replace("\\.", "/");
+            return packageName.replace(".", "/");
         }else{
-            return  Constant.DEFAULT_PACKAGE.replace("\\.", "/");
+            return  Constant.DEFAULT_PACKAGE.replace(".", "/");
         }
     }
 

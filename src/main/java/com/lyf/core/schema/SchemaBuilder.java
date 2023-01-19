@@ -1,5 +1,6 @@
 package com.lyf.core.schema;
 
+import com.lyf.constant.Constant;
 import com.lyf.core.model.enums.ColumnKeyTypeEnum;
 import com.lyf.core.model.enums.DataTypeEnum;
 import com.lyf.core.model.to.GenerationRequestInfoTo;
@@ -25,7 +26,9 @@ public class SchemaBuilder {
         //所有信息进行类型转换，汇聚成一个统一的 Schema
         List<TableSchema> tableSchemaList = generationRequestInfoTos.stream()
                 .map(SchemaBuilder::BuildFromRequestConfig)
-                .filter(e -> !ObjectUtils.isEmpty(e))
+                .filter(e -> {
+                    return !ObjectUtils.isEmpty(e) && !CollectionUtils.isEmpty(e.columnSchemaList);
+                })
                 .collect(Collectors.toList());
         log.info("create tableSchema from generationRequestInfoTos successfully");
         return tableSchemaList;
@@ -74,7 +77,29 @@ public class SchemaBuilder {
      * @return
      */
     public static TableSchema BuildDefaultSchema(GenerationRequestInfoTo generationRequestInfoTo){
-        return null;
+//        TableConfigRequest tableConfigRequest = generationRequestInfoTo.getTableConfigRequest();
+        TableInfoEntity tableInfoEntity = generationRequestInfoTo.getTableInfoEntity();
+        List<ColumnInfoEntity> columnInfoEntities = generationRequestInfoTo.getColumnInfoEntities();
+
+        String tableName = tableInfoEntity.getTableName();
+        String packageName = Constant.DEFAULT_PACKAGE;
+        String tableComment = tableInfoEntity.getTableComment();
+
+        List<ColumnSchema> columnSchemas = new ArrayList<>();
+        for (ColumnInfoEntity columnInfoEntity : columnInfoEntities) {
+            columnSchemas.add(BuildColumnSchema(columnInfoEntity));
+        }
+        return new TableSchema(tableName, packageName, columnSchemas, tableComment);
+    }
+
+    public static List<TableSchema> BuildDefaultSchema(List<GenerationRequestInfoTo> generationRequestInfoTos){
+        //所有信息进行类型转换，汇聚成一个统一的 Schema
+        List<TableSchema> tableSchemaList = generationRequestInfoTos.stream()
+                .map(SchemaBuilder::BuildDefaultSchema)
+                .filter(e -> !CollectionUtils.isEmpty(e.columnSchemaList))
+                .collect(Collectors.toList());
+        log.info("create tableSchema from generationRequestInfoTos successfully");
+        return tableSchemaList;
     }
 
     /**
@@ -94,5 +119,11 @@ public class SchemaBuilder {
         return new ColumnSchema(columnInfoEntity.getColumnName(), dataType,
                 columnInfoEntity.getColumnComment(), columnKeyTypeEnum,
                 ignoreEntity, ignoreRequest, ignoreResponse, ignoreTo);
+    }
+
+    public static ColumnSchema BuildColumnSchema(ColumnInfoEntity columnInfoEntity){
+        DataTypeEnum dataType = DataTypeEnum.getEnumByMysqlTypeWithDefault(columnInfoEntity.getDataType());
+        ColumnKeyTypeEnum columnKeyTypeEnum = ColumnKeyTypeEnum.getEnumByTypeWithDefault(columnInfoEntity.getColumnKey());
+        return new ColumnSchema(columnInfoEntity.getColumnName(), dataType, columnInfoEntity.getColumnComment(), columnKeyTypeEnum);
     }
 }

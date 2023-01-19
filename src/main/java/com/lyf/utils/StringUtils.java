@@ -15,6 +15,6 @@ public class StringUtils {
         if (!org.springframework.util.StringUtils.hasText(underscore)) {
             return "";
         }
-        return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, underscore);
+        return CaseFormat.LOWER_UNDERSCORE.to(CaseFormat.UPPER_CAMEL, underscore);
     }
 }
