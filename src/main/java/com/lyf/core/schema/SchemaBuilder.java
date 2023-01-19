@@ -114,11 +114,11 @@ public class SchemaBuilder {
         boolean ignoreEntity = Optional.ofNullable(columnConfigRequest.getIgnoreEntity()).orElse(false);
         boolean ignoreRequest = Optional.ofNullable(columnConfigRequest.getIgnoreRequest()).orElse(false);
         boolean ignoreResponse = Optional.ofNullable(columnConfigRequest.getIgnoreRequest()).orElse(false);
-        boolean ignoreTo = Optional.ofNullable(columnConfigRequest.getIgnoreTo()).orElse(false);
+        boolean ignoreVo = Optional.ofNullable(columnConfigRequest.getIgnoreVo()).orElse(false);
 
         return new ColumnSchema(columnInfoEntity.getColumnName(), dataType,
                 columnInfoEntity.getColumnComment(), columnKeyTypeEnum,
-                ignoreEntity, ignoreRequest, ignoreResponse, ignoreTo);
+                ignoreEntity, ignoreRequest, ignoreResponse, ignoreVo);
     }
 
     public static ColumnSchema BuildColumnSchema(ColumnInfoEntity columnInfoEntity){

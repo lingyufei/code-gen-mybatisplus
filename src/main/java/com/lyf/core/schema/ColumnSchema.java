@@ -30,18 +30,19 @@ public class ColumnSchema {
 
     private Boolean ignoreResponse;
 
-    private Boolean ignoreTo;
+    private Boolean ignoreVo;
 
 
     public ColumnSchema(String columnName, DataTypeEnum dataType, String columnComment,
                         ColumnKeyTypeEnum columnKey, Boolean ignoreEntity, Boolean ignoreRequest,
-                        Boolean ignoreResponse, Boolean ignoreTo) {
+                        Boolean ignoreResponse, Boolean ignoreVo) {
         this.columnName = columnName;
         this.lowerCamelName = StringUtils.LowerUnderscoreToLowerCamel(columnName);
         this.upperCamelName = StringUtils.LowerUnderScoreToUpperCamel(columnName);
         this.ignoreEntity = ignoreEntity;
         this.ignoreRequest = ignoreRequest;
         this.ignoreResponse = ignoreResponse;
+        this.ignoreVo = ignoreVo;
         this.dataType = dataType;
         this.columnComment = columnComment;
         this.columnKey = columnKey;
@@ -54,7 +55,7 @@ public class ColumnSchema {
         this.ignoreEntity = false;
         this.ignoreRequest = false;
         this.ignoreResponse = false;
-        this.ignoreTo = false;
+        this.ignoreVo = false;
         this.dataType = dataType;
         this.columnComment = columnComment;
         this.columnKey = columnKey;
@@ -144,11 +145,11 @@ public class ColumnSchema {
         this.ignoreResponse = ignoreResponse;
     }
 
-    public Boolean getIgnoreTo() {
-        return ignoreTo;
+    public Boolean getIgnoreVo() {
+        return ignoreVo;
     }
 
-    public void setIgnoreTo(Boolean ignoreTo) {
-        this.ignoreTo = ignoreTo;
+    public void setIgnoreVo(Boolean ignoreVo) {
+        this.ignoreVo = ignoreVo;
     }
 }

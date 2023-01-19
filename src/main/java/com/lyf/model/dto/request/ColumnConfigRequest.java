@@ -13,5 +13,5 @@ public class ColumnConfigRequest {
     private Boolean ignoreEntity = false;
     private Boolean ignoreRequest = false;
     private Boolean ignoreResponse= false;
-    private Boolean ignoreTo= false;
+    private Boolean ignoreVo= false;
 }
