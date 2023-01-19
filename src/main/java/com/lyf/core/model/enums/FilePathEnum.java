@@ -14,7 +14,14 @@ public enum FilePathEnum {
     REQUEST("Request.java", "/java/${packageName}/model/dto/request/"),
     RESPONSE("Response.java", "/java/${packageName}/model/dto/response/"),
     VO("Vo.java", "/java/${packageName}/model/vo/"),
-    DEFAULT("", "/resources/others/");
+    DEFAULT("", "/resources/others/"),
+    //通用类
+    DEPENDENCY("Dependency.xml", "/resources/others/"),
+    APPLICATION("application.yml", "/resources/"),
+    EXCEPTION("BusinessException.java", "/java/${packageName}/exception/"),
+    ExceptionCodeEnum("ExceptionCodeEnum.java", "/java/${packageName}/constant/enums/"),
+    ControllerAdvice("ExceptionControllerAdvice.java", "/java/${packageName}/interceptor/"),
+    R("R.java", "/java/${packageName}/utils/");
 
     
     final String fileName;

@@ -62,7 +62,13 @@ class CodeGenMybatisplusApplicationTests {
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Controller.java.ftl");
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Request.java.ftl");
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Response.java.ftl");
-        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Vo.java.ftl");
+//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Vo.java.ftl");
+        Optional<StringWriterResultTo> generate1 = freeMarkerGenerator.generate(tableSchema, "common/application.yml.ftl");
+        Optional<StringWriterResultTo> generate2 = freeMarkerGenerator.generate(tableSchema, "common/BusinessException.java.ftl");
+        Optional<StringWriterResultTo> generate3 = freeMarkerGenerator.generate(tableSchema, "common/Dependency.xml.ftl");
+        Optional<StringWriterResultTo> generate4 = freeMarkerGenerator.generate(tableSchema, "common/ExceptionCodeEnum.java.ftl");
+        Optional<StringWriterResultTo> generate5 = freeMarkerGenerator.generate(tableSchema, "common/ExceptionControllerAdvice.java.ftl");
+        Optional<StringWriterResultTo> generate6 = freeMarkerGenerator.generate(tableSchema, "common/R.java.ftl");
 
     }
 
