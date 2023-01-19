@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class ${upperCamelName}Request {
 
     <#list columnSchemaList as columnSchema>
-    <#if !columnSchema.ignoreResponse>
+    <#if !columnSchema.ignoreRequest>
         private ${columnSchema.dataType.javaType} ${columnSchema.lowerCamelName};
     </#if>
 

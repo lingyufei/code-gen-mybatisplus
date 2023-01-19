@@ -26,6 +26,7 @@ public class ${upperCamelName} implements Serializable {
 
     <#-- 循环生成字段 ---------->
     <#list columnSchemaList as columnSchema>
+    <#if !columnSchema.ignoreEntity>
     <#if columnSchema.columnComment!?length gt 0>
     /**
     * ${columnSchema.columnComment}
@@ -35,13 +36,14 @@ public class ${upperCamelName} implements Serializable {
     @TableId
     </#if>
     private ${columnSchema.dataType.javaType} ${columnSchema.lowerCamelName};
+    </#if>
 
     </#list>
 
     public ${upperCamelName}(${upperCamelName}Request source){
     <#list columnSchemaList as columnSchema>
-        <#if !columnSchema.ignoreResponse>
-        set${columnSchema.upperCamelName}(source.get${columnSchema.upperCamelName}());
+        <#if !columnSchema.ignoreRequest && !columnSchema.ignoreEntity>
+        this.${columnSchema.lowerCamelName} = source.get${columnSchema.upperCamelName}();
         </#if>
     </#list>
     }

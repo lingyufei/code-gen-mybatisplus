@@ -54,13 +54,14 @@ class CodeGenMybatisplusApplicationTests {
         GenerationRequestInfoTo requestInfoTo = new GenerationRequestInfoTo("user_info", null, tableInfoEntity, columnInfoEntities);
 
         TableSchema tableSchema = SchemaBuilder.BuildDefaultSchema(requestInfoTo);
-//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Entity.java.ftl");
+        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Entity.java.ftl");
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Dao.java.ftl");
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Dao.xml.ftl");
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "service.java.ftl");
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "ServiceImpl.java.ftl");
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Controller.java.ftl");
-        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Request.java.ftl");
+//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Request.java.ftl");
+//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Response.java.ftl");
 
     }
 
