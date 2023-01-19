@@ -3,6 +3,7 @@ package com.lyf.service.impl;
 import com.alibaba.fastjson.JSON;
 import com.lyf.core.generator.GeneratorFacade;
 import com.lyf.core.model.to.GenerationRequestInfoTo;
+import com.lyf.core.model.to.StringWriterResultTo;
 import com.lyf.dao.MySQLDatabaseInfoDao;
 import com.lyf.exception.BusinessException;
 import com.lyf.model.dto.request.TableConfigRequest;
@@ -17,6 +18,8 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
+import java.io.StringWriter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,8 +28,10 @@ import static com.lyf.constant.ExceptionCodeEnum.FORM_VALID_EXCEPTION;
 @Service("mySQLDatabaseInfoService")
 public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
 
-    @Autowired
+    @Resource
     MySQLDatabaseInfoDao mySQLDatabaseInfoDao;
+    @Resource
+    GeneratorFacade generatorFacade;
 
     /**
      * 返回数据库表信息，支持模糊查询
@@ -90,6 +95,6 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
                     new GenerationRequestInfoTo(tableName, tableConfigRequest, tableInfoEntity, columnInfoEntities));
         }
 
-        GeneratorFacade.Generate(generationRequestInfos);
+        List<StringWriterResultTo> resultToList = generatorFacade.generateByRequest(generationRequestInfos);
     }
 }

@@ -1,5 +1,6 @@
 package com.lyf.core.schema;
 
+import com.lyf.core.model.enums.ColumnKeyTypeEnum;
 import com.lyf.core.model.enums.DataTypeEnum;
 import com.lyf.model.dto.request.ColumnConfigRequest;
 import com.lyf.model.dto.request.PageRequest;
@@ -15,7 +16,7 @@ public class ColumnSchema {
 
     private String columnComment;
 
-    private String columnKey;
+    private ColumnKeyTypeEnum columnKey;
 
     //java LOWER_CAMEL  userInfo
     private String lowerCamelName;
@@ -33,7 +34,7 @@ public class ColumnSchema {
 
 
     public ColumnSchema(String columnName, DataTypeEnum dataType, String columnComment,
-                        String columnKey, Boolean ignoreEntity, Boolean ignoreRequest,
+                        ColumnKeyTypeEnum columnKey, Boolean ignoreEntity, Boolean ignoreRequest,
                         Boolean ignoreResponse, Boolean ignoreTo) {
         this.columnName = columnName;
         this.lowerCamelName = StringUtils.LowerUnderscoreToLowerCamel(columnName);
@@ -46,7 +47,7 @@ public class ColumnSchema {
         this.columnKey = columnKey;
     }
 
-    public ColumnSchema(String columnName, DataTypeEnum dataType, String columnComment, String columnKey) {
+    public ColumnSchema(String columnName, DataTypeEnum dataType, String columnComment, ColumnKeyTypeEnum columnKey) {
         this.columnName = columnName;
         this.lowerCamelName = StringUtils.LowerUnderscoreToLowerCamel(columnName);
         this.upperCamelName = StringUtils.LowerUnderScoreToUpperCamel(columnName);
@@ -57,6 +58,18 @@ public class ColumnSchema {
         this.dataType = dataType;
         this.columnComment = columnComment;
         this.columnKey = columnKey;
+    }
+
+    public ColumnSchema() {
+
+    }
+
+    public boolean isPrimaryKey(){
+        return ColumnKeyTypeEnum.PRIMARY.equals(this.columnKey);
+    }
+
+    public boolean isUniqueKey(){
+        return ColumnKeyTypeEnum.UNIQUE.equals(this.columnKey);
     }
 
     public DataTypeEnum getDataType() {
@@ -75,11 +88,11 @@ public class ColumnSchema {
         this.columnComment = columnComment;
     }
 
-    public String getColumnKey() {
+    public ColumnKeyTypeEnum getColumnKey() {
         return columnKey;
     }
 
-    public void setColumnKey(String columnKey) {
+    public void setColumnKey(ColumnKeyTypeEnum columnKey) {
         this.columnKey = columnKey;
     }
 

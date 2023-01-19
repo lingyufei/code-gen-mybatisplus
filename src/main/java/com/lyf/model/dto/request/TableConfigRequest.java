@@ -11,5 +11,6 @@ import java.util.List;
 @NoArgsConstructor
 public class TableConfigRequest {
     private String tableName;
+    private String packageName;
     private List<ColumnConfigRequest> ColumnConfigRequests;
 }
