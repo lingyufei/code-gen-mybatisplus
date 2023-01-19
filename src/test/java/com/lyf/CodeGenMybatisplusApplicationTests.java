@@ -58,7 +58,9 @@ class CodeGenMybatisplusApplicationTests {
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Dao.java.ftl");
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Dao.xml.ftl");
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "service.java.ftl");
-        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "ServiceImpl.java.ftl");
+//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "ServiceImpl.java.ftl");
+//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Controller.java.ftl");
+        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Request.java.ftl");
 
     }
 

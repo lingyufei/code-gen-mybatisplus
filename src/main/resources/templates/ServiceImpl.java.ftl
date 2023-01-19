@@ -17,6 +17,12 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+* ${tableName} ServiceImpl
+* @author chenshun
+* @email sunlightcs@gmail.com
+* @date 2023-01-17 09:29:27
+*/
 @Service("${lowerCamelName}Service")
 public class ${upperCamelName}ServiceImpl extends ServiceImpl<${upperCamelName}Dao, ${upperCamelName}> implements ${upperCamelName}Service {
     @Autowired
