@@ -4,7 +4,8 @@ import com.lyf.core.model.to.StringWriterResultTo;
 import com.lyf.core.schema.TableSchema;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface Generator {
-    List<StringWriterResultTo> generate(TableSchema tableSchema);
+    Optional<StringWriterResultTo> generate(TableSchema tableSchema, String fileName);
 }

@@ -1,5 +1,6 @@
 package com.lyf.core.schema;
 
+import com.lyf.constant.Constant;
 import com.lyf.utils.StringUtils;
 
 import java.util.List;
@@ -25,6 +26,11 @@ public class TableSchema {
         this.tableName = tableName;
         this.lowerCamelName = StringUtils.LowerUnderscoreToLowerCamel(tableName);
         this.upperCamelName = StringUtils.LowerUnderScoreToUpperCamel(tableName);
+        if(org.springframework.util.StringUtils.hasText(packageName)){
+            this.packageName = packageName;
+        }else{
+            this.packageName = Constant.DEFAULT_PACKAGE;
+        }
         this.packageName = packageName;
         this.columnSchemaList = columnSchemaList;
         this.tableComment = tableComment;
@@ -36,6 +42,7 @@ public class TableSchema {
         this.upperCamelName = StringUtils.LowerUnderScoreToUpperCamel(tableName);
         this.columnSchemaList = columnSchemaList;
         this.tableComment = tableComment;
+        this.packageName = Constant.DEFAULT_PACKAGE;
     }
 
     public String getTableComment() {
@@ -71,7 +78,19 @@ public class TableSchema {
     }
 
     public String getPackageName() {
-        return packageName;
+        if(org.springframework.util.StringUtils.hasText(packageName)){
+            return packageName;
+        }else{
+            return  Constant.DEFAULT_PACKAGE;
+        }
+    }
+
+    public String getPackagePath() {
+        if(org.springframework.util.StringUtils.hasText(packageName)){
+            return packageName.replace("\\.", "/");
+        }else{
+            return  Constant.DEFAULT_PACKAGE.replace("\\.", "/");
+        }
     }
 
     public void setPackageName(String packageName) {
