@@ -11,7 +11,7 @@ public enum FilePathEnum {
     SERVICEIMPL("ServiceImpl.java", "/${packageName}/service/impl/"),
     DAO("Dao.java", "/java/${packageName}/dao/"),
     DAO_XML("Dao.xml", "/resources/mapper/"),
-    ENTITY("Entity.java", "/java/${packageName}/model/entity/"),
+    ENTITY(".java", "/java/${packageName}/model/entity/"),
     REQUEST("Request.java", "/java/${packageName}/model/dto/request/"),
     RESPONSE("Response.java", "/java/${packageName}/model/dto/response/"),
     VO("Vo.java", "/java/${packageName}/model/vo/"),
