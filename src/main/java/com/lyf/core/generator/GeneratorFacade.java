@@ -1,6 +1,7 @@
 package com.lyf.core.generator;
 
 import com.lyf.constant.Constant;
+import com.lyf.core.model.enums.FilePathEnum;
 import com.lyf.core.model.to.StringWriterResultTo;
 import com.lyf.core.schema.SchemaBuilder;
 import com.lyf.core.schema.TableSchema;
@@ -10,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.io.StringWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -44,18 +46,35 @@ public class GeneratorFacade implements Generator{
         for (TableSchema tableSchema : tableSchemaList) {
             List<String> fileNames = FileUtils.GetFileNameUnderFolder(Constant.FREEMARKER_TEMPLATE_FOLDER);
             for (String file: fileNames){
-                Optional<StringWriterResultTo> toOptional = generate(tableSchema, file);
-                toOptional.ifPresent(result::add);
+                FilePathEnum filePathEnum = FilePathEnum.getEnumByFileNameWithDefault(file);
+                String path = Constant.BASE_PATH + filePathEnum.getFilePath().replaceAll("\\$\\{packageName}", tableSchema.getPackagePath())
+                        + tableSchema.getUpperCamelName() + FileUtils.GetRealFileName(file, filePathEnum.getFileName());;
+
+                Optional<StringWriter> optional = generate(tableSchema, file);
+                optional.ifPresent(e ->{
+                    result.add(new StringWriterResultTo(path, e));
+                });
             }
         }
 
         //其他生成xxxx
+        List<String> commonFiles = FileUtils.GetFileNameUnderFolder(Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_PATH);
+        TableSchema tableSchema = tableSchemaList.get(0);
+        for (String commonFile : commonFiles) {
+            FilePathEnum filePathEnum = FilePathEnum.getEnumByFileNameWithDefault(commonFile);
+            String path = Constant.BASE_PATH + filePathEnum.getFilePath().replaceAll("\\$\\{packageName}", tableSchema.getPackagePath())
+                                             + FileUtils.GetRealFileName(commonFile, filePathEnum.getFileName());
 
+            Optional<StringWriter> optional = generate(tableSchema, Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_NAME + commonFile);
+            optional.ifPresent(e ->{
+                result.add(new StringWriterResultTo(path, e));
+            });
+        }
         return result;
     }
 
     @Override
-    public Optional<StringWriterResultTo> generate(TableSchema tableSchema, String fileName) {
+    public Optional<StringWriter> generate(TableSchema tableSchema, String fileName) {
         return freeMarkerGenerator.generate(tableSchema, fileName);
     }
 }

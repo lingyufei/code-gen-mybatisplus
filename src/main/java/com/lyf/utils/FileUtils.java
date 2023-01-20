@@ -43,4 +43,22 @@ public class FileUtils {
         }
         return fileWithPath;
     }
+
+    /**
+     *
+     * @param templateName  Dao.java.ftl
+     * @param enumFileName  Dao.java / ""(default)
+     * @return
+     */
+    public static String GetRealFileName(String templateName, String enumFileName){
+        if(StringUtils.hasText(enumFileName)){
+            return enumFileName;
+        }else{
+            int index = enumFileName.lastIndexOf(".ftl");
+            if(index > -1){
+                templateName = templateName.substring(0, index);
+            }
+            return templateName;
+        }
+    }
 }

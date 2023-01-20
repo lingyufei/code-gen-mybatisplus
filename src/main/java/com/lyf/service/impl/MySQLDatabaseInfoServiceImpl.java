@@ -106,8 +106,16 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
 
     @Override
     public void generateByDefault(ConfigRequest configRequest) {
-        String packageName = Optional.ofNullable(configRequest.getPackageName()).orElse(Constant.DEFAULT_PACKAGE);
-        String author = Optional.ofNullable(configRequest.getAuthor()).orElse(Constant.DEFAULT_PACKAGE);
+        String packageName = Constant.DEFAULT_PACKAGE;
+        String author = Constant.DEFAULT_AUTHOR;
+        if(!ObjectUtils.isEmpty(configRequest)){
+            if(StringUtils.hasText(configRequest.getPackageName())){
+                packageName = configRequest.getPackageName();
+            }
+            if(StringUtils.hasText(configRequest.getAuthor())){
+                author = configRequest.getAuthor();
+            }
+        }
 
         List<TableInfoEntity> tableInfoEntities = mySQLDatabaseInfoDao.queryList(null);
         List<GenerationRequestInfoTo> generationRequestInfos = new ArrayList<>();
@@ -115,7 +123,7 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
             String tableName = tableInfoEntity.getTableName();
             List<ColumnInfoEntity> columnInfoEntities = mySQLDatabaseInfoDao.queryColumns(tableName);
             generationRequestInfos.add(
-                    new GenerationRequestInfoTo(tableName, null, tableInfoEntity, columnInfoEntities, author, packageName));
+                    new GenerationRequestInfoTo(tableName, null, tableInfoEntity, columnInfoEntities, packageName, author));
         }
 
         List<StringWriterResultTo> resultTos = generatorFacade.generateByDefault(generationRequestInfos);

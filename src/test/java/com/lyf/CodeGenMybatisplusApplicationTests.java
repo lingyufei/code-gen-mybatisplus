@@ -1,5 +1,6 @@
 package com.lyf;
 
+import com.lyf.constant.Constant;
 import com.lyf.core.generator.FreeMarkerGenerator;
 import com.lyf.core.model.to.GenerationRequestInfoTo;
 import com.lyf.core.model.to.StringWriterResultTo;
@@ -51,7 +52,7 @@ class CodeGenMybatisplusApplicationTests {
     void testFreeMarker(){
         TableInfoEntity tableInfoEntity = mySQLDatabaseInfoDao.queryTable("user_info");
         List<ColumnInfoEntity> columnInfoEntities = mySQLDatabaseInfoDao.queryColumns("user_info");
-        GenerationRequestInfoTo requestInfoTo = new GenerationRequestInfoTo("user_info", null, tableInfoEntity, columnInfoEntities);
+        GenerationRequestInfoTo requestInfoTo = new GenerationRequestInfoTo("user_info", null, tableInfoEntity, columnInfoEntities, Constant.DEFAULT_PACKAGE, Constant.DEFAULT_AUTHOR);
 
         TableSchema tableSchema = SchemaBuilder.BuildDefaultSchema(requestInfoTo);
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Entity.java.ftl");
@@ -62,14 +63,19 @@ class CodeGenMybatisplusApplicationTests {
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Controller.java.ftl");
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Request.java.ftl");
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Response.java.ftl");
-//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Vo.java.ftl");
-        Optional<StringWriterResultTo> generate1 = freeMarkerGenerator.generate(tableSchema, "common/application.yml.ftl");
-        Optional<StringWriterResultTo> generate2 = freeMarkerGenerator.generate(tableSchema, "common/BusinessException.java.ftl");
-        Optional<StringWriterResultTo> generate3 = freeMarkerGenerator.generate(tableSchema, "common/Dependency.xml.ftl");
-        Optional<StringWriterResultTo> generate4 = freeMarkerGenerator.generate(tableSchema, "common/ExceptionCodeEnum.java.ftl");
-        Optional<StringWriterResultTo> generate5 = freeMarkerGenerator.generate(tableSchema, "common/ExceptionControllerAdvice.java.ftl");
-        Optional<StringWriterResultTo> generate6 = freeMarkerGenerator.generate(tableSchema, "common/R.java.ftl");
+        freeMarkerGenerator.generate(tableSchema, "Vo.java.ftl");
+        freeMarkerGenerator.generate(tableSchema, "common/application.yml.ftl");
+        freeMarkerGenerator.generate(tableSchema, "common/BusinessException.java.ftl");
+        freeMarkerGenerator.generate(tableSchema, "common/Dependency.xml.ftl");
+        freeMarkerGenerator.generate(tableSchema, "common/ExceptionCodeEnum.java.ftl");
+        freeMarkerGenerator.generate(tableSchema, "common/ExceptionControllerAdvice.java.ftl");
+        freeMarkerGenerator.generate(tableSchema, "common/R.java.ftl");
 
+    }
+
+    @Test
+    public void testDefaultGen(){
+        mySQLDatabaseInfoService.generateByDefault(null);
     }
 
 }

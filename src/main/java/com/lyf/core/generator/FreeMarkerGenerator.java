@@ -4,6 +4,7 @@ import com.lyf.constant.Constant;
 import com.lyf.core.model.enums.FilePathEnum;
 import com.lyf.core.model.to.StringWriterResultTo;
 import com.lyf.core.schema.TableSchema;
+import com.lyf.utils.FileUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -23,17 +24,14 @@ public class FreeMarkerGenerator implements Generator{
     Configuration configuration;
 
     @Override
-    public Optional<StringWriterResultTo> generate(TableSchema tableSchema, String fileName) {
-        FilePathEnum filePathEnum = FilePathEnum.getEnumByFileNameWithDefault(fileName);
-        String path = Constant.BASE_PATH + filePathEnum.getFilePath().replaceAll("\\$\\{packageName}", tableSchema.getPackagePath());
-
+    public Optional<StringWriter> generate(TableSchema tableSchema, String fileName) {
         Template temp = null;
         StringWriter stringWriter = new StringWriter();
         try {
             temp = configuration.getTemplate(fileName);
             temp.process(tableSchema, stringWriter);
 
-            return Optional.of(new StringWriterResultTo(path, stringWriter));
+            return Optional.of(stringWriter);
         } catch (IOException | TemplateException e) {
             log.warn("[{}] processing exception, [{}]", fileName, e);
             return Optional.empty();
