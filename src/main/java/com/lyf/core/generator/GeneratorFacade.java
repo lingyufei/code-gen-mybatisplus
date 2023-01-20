@@ -57,7 +57,7 @@ public class GeneratorFacade implements Generator{
             }
         }
 
-        //其他生成xxxx
+        //其他生成common类
         List<String> commonFiles = FileUtils.GetFileNameUnderFolder(Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_PATH);
         TableSchema tableSchema = tableSchemaList.get(0);
         for (String commonFile : commonFiles) {

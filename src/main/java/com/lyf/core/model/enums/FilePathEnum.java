@@ -14,7 +14,8 @@ public enum FilePathEnum {
     ENTITY(".java", "/java/${packageName}/model/entity/"),
     REQUEST("Request.java", "/java/${packageName}/model/dto/request/"),
     RESPONSE("Response.java", "/java/${packageName}/model/dto/response/"),
-    VO("Vo.java", "/java/${packageName}/model/vo/"),
+    BO("Bo.java", "/java/${packageName}/model/bo/"),
+    MAPPER("Mapper.java", "/java/${packageName}/model/mapper/"),
     //通用类
     DEPENDENCY("Dependency.xml", "/resources/others/"),
     APPLICATION("application.yml", "/resources/"),

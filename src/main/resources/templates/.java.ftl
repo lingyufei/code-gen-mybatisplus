@@ -2,7 +2,6 @@ package ${packageName}.model.entity;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
-import com.lyf.model.dto.request.UserInfoRequest;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,12 +38,4 @@ public class ${upperCamelName} implements Serializable {
     </#if>
 
     </#list>
-
-    public ${upperCamelName}(${upperCamelName}Request source){
-    <#list columnSchemaList as columnSchema>
-        <#if !columnSchema.ignoreRequest && !columnSchema.ignoreEntity>
-        this.${columnSchema.lowerCamelName} = source.get${columnSchema.upperCamelName}();
-        </#if>
-    </#list>
-    }
 }

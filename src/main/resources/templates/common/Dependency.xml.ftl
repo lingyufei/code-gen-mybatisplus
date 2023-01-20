@@ -31,6 +31,13 @@
     <version>1.2.83</version>
 </dependency>
 
+<!-- https://mvnrepository.com/artifact/org.mapstruct/mapstruct -->
+<dependency>
+    <groupId>org.mapstruct</groupId>
+    <artifactId>mapstruct</artifactId>
+    <version>1.5.3.Final</version>
+</dependency>
+
 <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 <dependency>
     <groupId>org.apache.commons</groupId>
@@ -53,3 +60,28 @@
         </exclusion>
     </exclusions>
 </dependency>
+
+
+
+<plugin>
+    <groupId>org.apache.maven.plugins</groupId>
+    <artifactId>maven-compiler-plugin</artifactId>
+    <version>3.8.1</version>
+    <configuration>
+        <source>1.8</source>
+        <target>1.8</target>
+        <annotationProcessorPaths>
+            <path>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </path>
+
+            <path>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>1.5.3.Final</version>
+            </path>
+        </annotationProcessorPaths>
+    </configuration>
+</plugin>
