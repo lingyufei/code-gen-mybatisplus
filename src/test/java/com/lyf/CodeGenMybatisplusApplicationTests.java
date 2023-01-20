@@ -55,15 +55,15 @@ class CodeGenMybatisplusApplicationTests {
         GenerationRequestInfoTo requestInfoTo = new GenerationRequestInfoTo("user_info", null, tableInfoEntity, columnInfoEntities, Constant.DEFAULT_PACKAGE, Constant.DEFAULT_AUTHOR);
 
         TableSchema tableSchema = SchemaBuilder.BuildDefaultSchema(requestInfoTo);
-//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, ".java.ftl");
-//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Dao.java.ftl");
-//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Dao.xml.ftl");
+//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "${entity}.java.ftl");
+//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "${entity}Dao.java.ftl");
+//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "${entity}Dao.xml.ftl");
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "service.java.ftl");
-//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "ServiceImpl.java.ftl");
-//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Controller.java.ftl");
-//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Request.java.ftl");
-//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "Response.java.ftl");
-        freeMarkerGenerator.generate(tableSchema, "Bo.java.ftl");
+//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "${entity}ServiceImpl.java.ftl");
+//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "${entity}Controller.java.ftl");
+//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "${entity}Request.java.ftl");
+//        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "${entity}Response.java.ftl");
+        freeMarkerGenerator.generate(tableSchema, "${entity}Bo.java.ftl");
         freeMarkerGenerator.generate(tableSchema, "common/application.yml.ftl");
         freeMarkerGenerator.generate(tableSchema, "common/BusinessException.java.ftl");
         freeMarkerGenerator.generate(tableSchema, "common/Dependency.xml.ftl");

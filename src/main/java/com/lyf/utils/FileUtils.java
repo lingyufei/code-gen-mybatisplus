@@ -46,7 +46,7 @@ public class FileUtils {
 
     /**
      *
-     * @param templateName  Dao.java.ftl
+     * @param templateName  ${entity}Dao.java.ftl
      * @param enumFileName  Dao.java / ""(default)
      * @return
      */
@@ -54,11 +54,31 @@ public class FileUtils {
         if(StringUtils.hasText(enumFileName)){
             return enumFileName;
         }else{
-            int index = enumFileName.lastIndexOf(".ftl");
+            int index = templateName.lastIndexOf(".ftl");
             if(index > -1){
                 templateName = templateName.substring(0, index);
             }
             return templateName;
         }
+    }
+
+    /**
+     *
+     * @param templateName  ${entity}Dao.java.ftl
+     * @return
+     */
+    public static String GetGenerationFileName(String templateName){
+        if(!StringUtils.hasText(templateName)){
+            return "";
+        }
+        int index = templateName.lastIndexOf(".ftl");
+        if(index > -1){
+            templateName = templateName.substring(0, index);
+        }
+        return templateName;
+    }
+
+    public static String GetRelativePath(File child, File parent){
+        return parent.toURI().relativize(child.toURI()).getPath();
     }
 }
