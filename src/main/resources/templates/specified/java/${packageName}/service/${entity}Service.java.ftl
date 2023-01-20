@@ -3,9 +3,9 @@ package ${packageName}.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import ${packageName}.model.dto.request.PageRequest;
-import ${packageName}.dto.request.${upperCamelName}Request;
-import ${packageName}.dto.response.PageResponse;
-import ${packageName}.dto.response.${upperCamelName}Response;
+import ${packageName}.model.dto.request.${upperCamelName}Request;
+import ${packageName}.model.dto.response.PageResponse;
+import ${packageName}.model.dto.response.${upperCamelName}Response;
 import ${packageName}.entity.${upperCamelName};
 
 /**

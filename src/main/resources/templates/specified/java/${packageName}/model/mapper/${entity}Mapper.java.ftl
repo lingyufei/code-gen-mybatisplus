@@ -1,6 +1,6 @@
 package ${packageName}.model.mapper;
 
-import ${packageName}.model.Bo.${upperCamelName}Bo;
+import ${packageName}.model.bo.${upperCamelName}Bo;
 import ${packageName}.model.dto.request.${upperCamelName}Request;
 import ${packageName}.model.dto.response.${upperCamelName}Response;
 import ${packageName}.model.entity.${upperCamelName};

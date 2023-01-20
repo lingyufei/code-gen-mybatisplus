@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ${packageName}.utils.ExceptionCodeEnum.DB_DUPLICATE_KEY_EXCEPTION;
-import static ${packageName}.utils.ExceptionCodeEnum.SERVER_EXCEPTION;
+import static ${packageName}.exception.ExceptionCodeEnum.DB_DUPLICATE_KEY_EXCEPTION;
+import static ${packageName}.exception.ExceptionCodeEnum.SERVER_EXCEPTION;
 
 /**
 * 全局异常捕获

@@ -11,6 +11,6 @@ import org.apache.ibatis.annotations.Mapper;
 * @date 2023-01-17 09:29:27
 */
 @Mapper
-public interface UserInfoDao extends BaseMapper<${upperCamelName}> {
+public interface ${upperCamelName}Dao extends BaseMapper<${upperCamelName}> {
 
 }
