@@ -15,6 +15,7 @@ import com.lyf.model.dto.response.TableInfoResponse;
 import com.lyf.model.entity.ColumnInfoEntity;
 import com.lyf.model.entity.TableInfoEntity;
 import com.lyf.service.MySQLDatabaseInfoService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import java.util.stream.Collectors;
 
 import static com.lyf.constant.ExceptionCodeEnum.FORM_VALID_EXCEPTION;
 
+@Slf4j
 @Service("mySQLDatabaseInfoService")
 public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
 
@@ -113,6 +115,7 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
 
     @Override
     public byte[] generateByDefault(ConfigRequest configRequest) {
+        log.info("begin to generateByDefault, configRequest: [{}]", configRequest);
         String packageName = Constant.DEFAULT_PACKAGE;
         String author = Constant.DEFAULT_AUTHOR;
         if(!ObjectUtils.isEmpty(configRequest)){

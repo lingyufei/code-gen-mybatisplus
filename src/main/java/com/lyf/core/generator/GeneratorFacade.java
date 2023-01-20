@@ -60,6 +60,7 @@ public class GeneratorFacade{
      * @return 结果集
      */
     private List<StringWriterResultTo> generateCommonTemplatesUnderFolder(String folder, List<TableSchema> tableSchemaList){
+        log.info("begin to generateCommonTemplates");
         List<StringWriterResultTo> result = new ArrayList<>();
 
         Map<String, File> fileMap = getFileMapUnderFolder(folder);
@@ -81,10 +82,12 @@ public class GeneratorFacade{
     }
 
     private List<StringWriterResultTo> generateSpecifiedTemplatesUnderFolder(String folder, Collection<TableSchema> tableSchemaList){
+        log.info("begin to generateSpecifiedTemplatesUnderFolder");
         List<StringWriterResultTo> result = new ArrayList<>();
 
         Map<String, File> fileMap = getFileMapUnderFolder(folder);
         for (TableSchema tableSchema: tableSchemaList){
+            log.info("generateSpecifiedTemplates for [{}]", tableSchema.getTableName());
             String packagePath = tableSchema.getPackagePath();
             String entityName = tableSchema.getUpperCamelName();
             for (Map.Entry<String, File> entry : fileMap.entrySet()) {
@@ -113,6 +116,7 @@ public class GeneratorFacade{
         File rootFolder = new File(folder);
         Map<String, File> fileMap = new ConcurrentHashMap<>();
         getTemplatesUnderFolder(rootFolder, rootFolder, fileMap);
+        log.info("getFileMapUnderFolder [{}], file: [{}]", folder, fileMap.keySet());
         return fileMap;
     }
 

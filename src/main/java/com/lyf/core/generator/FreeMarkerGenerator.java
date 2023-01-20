@@ -25,6 +25,7 @@ public class FreeMarkerGenerator implements Generator{
 
     @Override
     public Optional<StringWriter> generate(TableSchema tableSchema, String fileName) {
+        log.info("begin to generate [{}] for table [{}]", fileName, tableSchema.getTableName());
         Template temp = null;
         StringWriter stringWriter = new StringWriter();
         try {
@@ -33,7 +34,7 @@ public class FreeMarkerGenerator implements Generator{
 
             return Optional.of(stringWriter);
         } catch (IOException | TemplateException e) {
-            log.warn("[{}] processing exception, [{}]", fileName, e);
+            log.warn("FreeMarkerGenerator processing [{}] exception, [{}]", fileName, e);
             return Optional.empty();
         }
     }

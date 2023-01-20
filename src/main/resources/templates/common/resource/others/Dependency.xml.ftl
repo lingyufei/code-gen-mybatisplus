@@ -74,7 +74,6 @@
             <path>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
             </path>
 
             <path>

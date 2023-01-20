@@ -62,8 +62,8 @@ public class MySQLDatabaseInfoController {
         return R.ok();
     }
 
-    @PostMapping("/generate/default")
-    public void generateByDefault(@RequestBody ConfigRequest configRequest, HttpServletResponse response){
+    @GetMapping("/generate/default")
+    public void generateByDefault(@RequestBody(required = false) ConfigRequest configRequest, HttpServletResponse response){
         byte[] result = mySQLDatabaseInfoService.generateByDefault(configRequest);
         response.reset();
         response.setHeader("Content-Disposition", "attachment; filename=\"defaultCode.zip\"");
