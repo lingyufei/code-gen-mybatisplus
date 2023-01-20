@@ -41,40 +41,6 @@ public class GeneratorFacade{
         return doGenerate(tableSchemas);
     }
 
-//    public List<StringWriterResultTo> doGenerate(List<TableSchema> tableSchemaList){
-//        List<StringWriterResultTo> result = new ArrayList<>();
-//
-//        //FreeMarker生成
-//        for (TableSchema tableSchema : tableSchemaList) {
-//            List<String> fileNames = FileUtils.GetFileNameUnderFolder(Constant.FREEMARKER_TEMPLATE_FOLDER);
-//            for (String file: fileNames){
-//                FilePathEnum filePathEnum = FilePathEnum.getEnumByFileNameWithDefault(file);
-//                String path = Constant.BASE_PATH + filePathEnum.getFilePath().replaceAll("\\$\\{packageName}", tableSchema.getPackagePath())
-//                        + tableSchema.getUpperCamelName() + FileUtils.GetRealFileName(file, filePathEnum.getFileName());;
-//
-//                Optional<StringWriter> optional = generate(tableSchema, file);
-//                optional.ifPresent(e ->{
-//                    result.add(new StringWriterResultTo(path, e));
-//                });
-//            }
-//        }
-//
-//        //其他生成common类
-//        List<String> commonFiles = FileUtils.GetFileNameUnderFolder(Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_PATH);
-//        TableSchema tableSchema = tableSchemaList.get(0);
-//        for (String commonFile : commonFiles) {
-//            FilePathEnum filePathEnum = FilePathEnum.getEnumByFileNameWithDefault(commonFile);
-//            String path = Constant.BASE_PATH + filePathEnum.getFilePath().replaceAll("\\$\\{packageName}", tableSchema.getPackagePath())
-//                                             + FileUtils.GetRealFileName(commonFile, filePathEnum.getFileName());
-//
-//            Optional<StringWriter> optional = generate(tableSchema, Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_NAME + commonFile);
-//            optional.ifPresent(e ->{
-//                result.add(new StringWriterResultTo(path, e));
-//            });
-//        }
-//        return result;
-//    }
-
     public List<StringWriterResultTo> doGenerate(List<TableSchema> tableSchemaList){
         List<StringWriterResultTo> result = new ArrayList<>();
 
@@ -170,15 +136,54 @@ public class GeneratorFacade{
             if(subFile.isDirectory()){
                 getTemplatesUnderFolder(subFile, root, map);
             }else{
-                //开始计算相对路径 (/controller/${entity}Controller.java.ftl)
+                //计算相对路径 (/controller/${entity}Controller.java.ftl)
                 String relativePath = FileUtils.GetRelativePath(subFile, root);
-                //去除.ftl
-
-                //文件输出的路径 (/src/man/java/${packageName}/controller/Controller.java)
+                //去除.ftl。文件输出的路径 (/src/man/java/${packageName}/controller/Controller.java)
                 String path = Constant.BASE_PATH + FileUtils.GetGenerationFileName(relativePath);
                 map.put(path, subFile);
             }
         }
+    }
+
+
+    /**
+     * 基于 Enum 指定文件生成路径，过时！现在使用文件路径系统解析
+     * @param tableSchemaList
+     * @return
+     */
+    @Deprecated
+    public List<StringWriterResultTo> doGenerateByEnumMap(List<TableSchema> tableSchemaList){
+        List<StringWriterResultTo> result = new ArrayList<>();
+
+        //FreeMarker生成
+        for (TableSchema tableSchema : tableSchemaList) {
+            List<String> fileNames = FileUtils.GetFileNameUnderFolder(Constant.FREEMARKER_TEMPLATE_FOLDER);
+            for (String file: fileNames){
+                FilePathEnum filePathEnum = FilePathEnum.getEnumByFileNameWithDefault(file);
+                String path = Constant.BASE_PATH + filePathEnum.getFilePath().replaceAll("\\$\\{packageName}", tableSchema.getPackagePath())
+                        + tableSchema.getUpperCamelName() + FileUtils.GetRealFileName(file, filePathEnum.getFileName());;
+
+                Optional<StringWriter> optional = freeMarkerGenerator.generate(tableSchema, file);
+                optional.ifPresent(e ->{
+                    result.add(new StringWriterResultTo(path, e));
+                });
+            }
+        }
+
+        //其他生成common类
+        List<String> commonFiles = FileUtils.GetFileNameUnderFolder(Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_PATH);
+        TableSchema tableSchema = tableSchemaList.get(0);
+        for (String commonFile : commonFiles) {
+            FilePathEnum filePathEnum = FilePathEnum.getEnumByFileNameWithDefault(commonFile);
+            String path = Constant.BASE_PATH + filePathEnum.getFilePath().replaceAll("\\$\\{packageName}", tableSchema.getPackagePath())
+                                             + FileUtils.GetRealFileName(commonFile, filePathEnum.getFileName());
+
+            Optional<StringWriter> optional = freeMarkerGenerator.generate(tableSchema, Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_NAME + commonFile);
+            optional.ifPresent(e ->{
+                result.add(new StringWriterResultTo(path, e));
+            });
+        }
+        return result;
     }
 
 }

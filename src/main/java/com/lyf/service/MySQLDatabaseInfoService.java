@@ -16,7 +16,7 @@ public interface MySQLDatabaseInfoService {
 
     List<ColumnInfoResponse> queryColumnsOfTable(String tableName);
 
-    void generate(ConfigRequest configRequest);
+    byte[] generate(ConfigRequest configRequest);
 
-    void generateByDefault(ConfigRequest configRequest);
+    byte[] generateByDefault(ConfigRequest configRequest);
 }

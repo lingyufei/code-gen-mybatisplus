@@ -9,10 +9,10 @@ public enum ExceptionCodeEnum {
     FORM_VALID_EXCEPTION(1000, "您填写的表单格式不合法或未填写完整"),//表单校验异常
 
     //20开头，数据库通用异常
-    DB_DUPLICATE_KEY_EXCEPTION(2001, "您要添加的数据已存在");
+    DB_DUPLICATE_KEY_EXCEPTION(2001, "您要添加的数据已存在"),
 
     //30开头，数据生成请求 异常
-//    CODEGEN_DUPLICATE_KEY_EXCEPTION(2001, "您要添加的数据已存在");
+    GEN_FILE_OUTPUT_EXCEPTION(3001, "文件导出失败，请重试");
 
     private final Integer code;
     private final String msg;

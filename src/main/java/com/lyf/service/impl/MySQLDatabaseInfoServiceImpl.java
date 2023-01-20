@@ -2,6 +2,7 @@ package com.lyf.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.lyf.constant.Constant;
+import com.lyf.core.fileSaver.ZipFileSaver;
 import com.lyf.core.generator.GeneratorFacade;
 import com.lyf.core.model.to.GenerationRequestInfoTo;
 import com.lyf.core.model.to.StringWriterResultTo;
@@ -14,6 +15,8 @@ import com.lyf.model.dto.response.TableInfoResponse;
 import com.lyf.model.entity.ColumnInfoEntity;
 import com.lyf.model.entity.TableInfoEntity;
 import com.lyf.service.MySQLDatabaseInfoService;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -21,6 +24,9 @@ import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.StringWriter;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -75,7 +81,7 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
      * @param configRequest
      */
     @Override
-    public void generate(ConfigRequest configRequest) {
+    public byte[] generate(ConfigRequest configRequest) {
         List<TableConfigRequest> tableConfigRequests = configRequest.getTableConfigRequestList();
         String packageName = Optional.ofNullable(configRequest.getPackageName()).orElse(Constant.DEFAULT_PACKAGE);
         String author = Optional.ofNullable(configRequest.getAuthor()).orElse(Constant.DEFAULT_PACKAGE);
@@ -102,10 +108,11 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
         }
 
         List<StringWriterResultTo> resultToList = generatorFacade.generateByRequest(generationRequestInfos);
+        return ZipFileSaver.Save(resultToList);
     }
 
     @Override
-    public void generateByDefault(ConfigRequest configRequest) {
+    public byte[] generateByDefault(ConfigRequest configRequest) {
         String packageName = Constant.DEFAULT_PACKAGE;
         String author = Constant.DEFAULT_AUTHOR;
         if(!ObjectUtils.isEmpty(configRequest)){
@@ -126,6 +133,7 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
                     new GenerationRequestInfoTo(tableName, null, tableInfoEntity, columnInfoEntities, packageName, author));
         }
 
-        List<StringWriterResultTo> resultTos = generatorFacade.generateByDefault(generationRequestInfos);
+        List<StringWriterResultTo> resultToList = generatorFacade.generateByDefault(generationRequestInfos);
+        return ZipFileSaver.Save(resultToList);
     }
 }
