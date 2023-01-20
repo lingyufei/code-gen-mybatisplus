@@ -1,5 +1,6 @@
 package com.lyf.core.model.enums;
 
+import com.lyf.utils.FileUtils;
 import org.springframework.util.StringUtils;
 
 import java.util.Optional;
@@ -57,6 +58,7 @@ public enum FilePathEnum {
      * @return
      */
     public static FilePathEnum getEnumByFileNameWithDefault(String fileName) {
+        fileName = FileUtils.GetFileName(fileName);
         return Optional.ofNullable(FilePathEnum.getEnumByFileName(fileName))
                 .orElse(FilePathEnum.DEFAULT);
     }

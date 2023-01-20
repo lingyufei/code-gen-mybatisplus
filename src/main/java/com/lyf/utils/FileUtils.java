@@ -1,6 +1,7 @@
 package com.lyf.utils;
 
 import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -24,5 +25,22 @@ public class FileUtils {
             }
         }
         return result;
+    }
+
+    /**
+     * /a/b/c.java -> c.java
+     * @param fileWithPath
+     * @return
+     */
+    public static String GetFileName(String fileWithPath){
+        if(!StringUtils.hasText(fileWithPath)){
+            return fileWithPath;
+        }
+
+        int slashIndex = fileWithPath.lastIndexOf("/");
+        if(slashIndex > -1){
+            fileWithPath = fileWithPath.substring(slashIndex + 1);
+        }
+        return fileWithPath;
     }
 }
