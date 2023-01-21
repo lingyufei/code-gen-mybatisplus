@@ -2,6 +2,7 @@ package ${packageName}.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
+import ${packageName}.enums.ExceptionCodeEnum;
 import ${packageName}.exception.BusinessException;
 
 import java.util.HashMap;

@@ -8,7 +8,7 @@ import org.springframework.util.ObjectUtils;
 
 import java.util.Map;
 
-import static ${packageName}.utils.ExceptionCodeEnum.FORM_VALID_EXCEPTION;
+import static ${packageName}.constant.enums.ExceptionCodeEnum.FORM_VALID_EXCEPTION;
 
 /**
 * 分页请求

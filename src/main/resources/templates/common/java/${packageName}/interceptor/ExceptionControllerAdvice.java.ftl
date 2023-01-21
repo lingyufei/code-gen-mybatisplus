@@ -1,6 +1,8 @@
-package ${packageName}.utils;
+package ${packageName}.interceptor;
 
 import ${packageName}.exception.BusinessException;
+import ${packageName}.constant.enums.ExceptionCodeEnum;
+import ${packageName}.utils.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.validation.BindingResult;
@@ -11,11 +13,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ${packageName}.exception.ExceptionCodeEnum.DB_DUPLICATE_KEY_EXCEPTION;
-import static ${packageName}.exception.ExceptionCodeEnum.SERVER_EXCEPTION;
+import static ${packageName}.constant.enums.ExceptionCodeEnum.DB_DUPLICATE_KEY_EXCEPTION;
+import static ${packageName}.constant.enums.ExceptionCodeEnum.SERVER_EXCEPTION;
 
 /**
-* 全局异常捕获
 * @author LYF_
 * @create 2022-05-09 12:04
 */
@@ -52,7 +53,7 @@ public class ExceptionControllerAdvice {
     
     //其他异常处理
     @ExceptionHandler(value = Exception.class)
-        public R handleLoginException(Exception e) {
+    public R handleLoginException(Exception e) {
         log.warn("业务不可控异常: " + e.getMessage() + " 具体如下：\r" + e);
         return R.error(SERVER_EXCEPTION);
     }

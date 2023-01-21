@@ -1,4 +1,4 @@
-package ${packageName}.utils;
+package ${packageName}.constant.enums;
 
 /**
 * 异常枚举类

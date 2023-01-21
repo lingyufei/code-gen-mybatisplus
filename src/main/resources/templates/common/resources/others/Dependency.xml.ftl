@@ -1,3 +1,8 @@
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-aop</artifactId>
+</dependency>
+
 <!-- https://mvnrepository.com/artifact/com.baomidou/mybatis-plus-boot-starter -->
 <dependency>
     <groupId>com.baomidou</groupId>
@@ -60,8 +65,6 @@
         </exclusion>
     </exclusions>
 </dependency>
-
-
 
 <plugin>
     <groupId>org.apache.maven.plugins</groupId>

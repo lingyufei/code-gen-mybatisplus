@@ -1,6 +1,6 @@
 package ${packageName}.exception;
 
-import ${packageName}.utils.ExceptionCodeEnum;
+import ${packageName}.constant.enums.ExceptionCodeEnum;
 
 /**
  * @author LYF_
