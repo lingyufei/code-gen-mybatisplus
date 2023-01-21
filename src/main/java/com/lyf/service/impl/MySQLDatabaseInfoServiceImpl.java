@@ -119,12 +119,16 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
         log.info("begin to generateByDefault, configRequest: [{}]", configRequest);
         String packageName = Constant.DEFAULT_PACKAGE;
         String author = Constant.DEFAULT_AUTHOR;
+        OptionalConfigRequest optionalConfigRequest = new OptionalConfigRequest();
         if(!ObjectUtils.isEmpty(configRequest)){
             if(StringUtils.hasText(configRequest.getPackageName())){
                 packageName = configRequest.getPackageName();
             }
             if(StringUtils.hasText(configRequest.getAuthor())){
                 author = configRequest.getAuthor();
+            }
+            if(ObjectUtils.isEmpty(configRequest.getOptionalConfigRequest())){
+                optionalConfigRequest = configRequest.getOptionalConfigRequest();
             }
         }
 
@@ -137,7 +141,8 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
                     new TableGenerationInfoBo(tableName, null, tableInfoEntity, columnInfoEntities, packageName, author));
         }
 
-        List<StringWriterResultBo> resultToList = generatorFacade.generateByDefault(generationRequestInfos);
+        OptionalGenerationBo optionalGenerationBo = new OptionalGenerationBo(optionalConfigRequest.getIgnoreThreadPool(), optionalConfigRequest.getIgnoreLogInterceptor());
+        List<StringWriterResultBo> resultToList = generatorFacade.generateByDefault(new GenerationInfoBo(packageName, author, optionalGenerationBo, generationRequestInfos));
         return ZipFileSaver.Save(resultToList);
     }
 }

@@ -41,14 +41,23 @@ public class GeneratorFacade{
         OptionalSchema optionalSchema = new OptionalSchema(optionalGenerationBo.getIgnoreThreadPool(), optionalGenerationBo.getIgnoreLogInterceptor());
         List<TableSchema> tableSchemas = SchemaBuilder.BuildFromRequestConfig(generationInfoBo.getTableGenerationInfoBoList());
         //开始生成
-        new GeneralSchema(author, packageName, optionalSchema, tableSchemas);
-        return doGenerate(tableSchemas);
+        return doGenerate(new GeneralSchema(author, packageName, optionalSchema, tableSchemas));
     }
 
     public List<StringWriterResultBo> generateByRequest(List<TableGenerationInfoBo> tableGenerationInfoBos){
         List<TableSchema> tableSchemas = SchemaBuilder.BuildFromRequestConfig(tableGenerationInfoBos);
 
         return doGenerate(tableSchemas);
+    }
+
+    public List<StringWriterResultBo> generateByDefault(GenerationInfoBo generationInfoBo){
+        OptionalSchema optionalSchema = new OptionalSchema(generationInfoBo.getOptionalGenerationBo().getIgnoreThreadPool(),
+                                                        generationInfoBo.getOptionalGenerationBo().getIgnoreLogInterceptor());
+
+        List<TableSchema> tableSchemas = SchemaBuilder.BuildDefaultSchema(generationInfoBo.getTableGenerationInfoBoList());
+        GeneralSchema generalSchema = new GeneralSchema(generationInfoBo.getAuthor(),
+                generationInfoBo.getPackageName(), optionalSchema, tableSchemas);
+        return doGenerate(generalSchema);
     }
 
     public List<StringWriterResultBo> generateByDefault(List<TableGenerationInfoBo> tableGenerationInfoBos){
@@ -68,7 +77,7 @@ public class GeneratorFacade{
         result.addAll(generateCommonTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_PATH, new ArrayList<>(Collections.singleton(tableSchemaList.get(0)))));
 
         //生成所有可选项
-        result.addAll(generateCommonTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_OPTIONAL_FOLDER_NAME, new ArrayList<>(Collections.singleton(tableSchemaList.get(0)))));
+        result.addAll(generateCommonTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_OPTIONAL_FOLDER_PATH, new ArrayList<>(Collections.singleton(tableSchemaList.get(0)))));
         return result;
     }
 
