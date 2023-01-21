@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.lyf.constant.Constant;
 import com.lyf.core.fileSaver.ZipFileSaver;
 import com.lyf.core.generator.GeneratorFacade;
-import com.lyf.core.model.to.GenerationRequestInfoTo;
-import com.lyf.core.model.to.StringWriterResultTo;
+import com.lyf.core.model.bo.TableGenerationInfoBo;
+import com.lyf.core.model.bo.StringWriterResultBo;
 import com.lyf.dao.MySQLDatabaseInfoDao;
 import com.lyf.exception.BusinessException;
 import com.lyf.model.dto.request.ConfigRequest;
@@ -16,19 +16,12 @@ import com.lyf.model.entity.ColumnInfoEntity;
 import com.lyf.model.entity.TableInfoEntity;
 import com.lyf.service.MySQLDatabaseInfoService;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.Resource;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -96,7 +89,7 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
             throw new BusinessException("", FORM_VALID_EXCEPTION, JSON.toJSONString(tableConfigRequests));
         }
 
-        List<GenerationRequestInfoTo> generationRequestInfos = new ArrayList<>();
+        List<TableGenerationInfoBo> generationRequestInfos = new ArrayList<>();
 
         //进行数据转换
         for (TableConfigRequest tableConfigRequest : tableConfigRequests) {
@@ -106,10 +99,10 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
             List<ColumnInfoEntity> columnInfoEntities = mySQLDatabaseInfoDao.queryColumns(tableName);
 
             generationRequestInfos.add(
-                    new GenerationRequestInfoTo(tableName, tableConfigRequest, tableInfoEntity, columnInfoEntities, author, packageName));
+                    new TableGenerationInfoBo(tableName, tableConfigRequest, tableInfoEntity, columnInfoEntities, author, packageName));
         }
 
-        List<StringWriterResultTo> resultToList = generatorFacade.generateByRequest(generationRequestInfos);
+        List<StringWriterResultBo> resultToList = generatorFacade.generateByRequest(generationRequestInfos);
         return ZipFileSaver.Save(resultToList);
     }
 
@@ -128,15 +121,15 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
         }
 
         List<TableInfoEntity> tableInfoEntities = mySQLDatabaseInfoDao.queryList(null);
-        List<GenerationRequestInfoTo> generationRequestInfos = new ArrayList<>();
+        List<TableGenerationInfoBo> generationRequestInfos = new ArrayList<>();
         for (TableInfoEntity tableInfoEntity : tableInfoEntities) {
             String tableName = tableInfoEntity.getTableName();
             List<ColumnInfoEntity> columnInfoEntities = mySQLDatabaseInfoDao.queryColumns(tableName);
             generationRequestInfos.add(
-                    new GenerationRequestInfoTo(tableName, null, tableInfoEntity, columnInfoEntities, packageName, author));
+                    new TableGenerationInfoBo(tableName, null, tableInfoEntity, columnInfoEntities, packageName, author));
         }
 
-        List<StringWriterResultTo> resultToList = generatorFacade.generateByDefault(generationRequestInfos);
+        List<StringWriterResultBo> resultToList = generatorFacade.generateByDefault(generationRequestInfos);
         return ZipFileSaver.Save(resultToList);
     }
 }

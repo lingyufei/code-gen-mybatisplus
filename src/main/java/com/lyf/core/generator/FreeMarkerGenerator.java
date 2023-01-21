@@ -1,10 +1,6 @@
 package com.lyf.core.generator;
 
-import com.lyf.constant.Constant;
-import com.lyf.core.model.enums.FilePathEnum;
-import com.lyf.core.model.to.StringWriterResultTo;
 import com.lyf.core.schema.TableSchema;
-import com.lyf.utils.FileUtils;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;

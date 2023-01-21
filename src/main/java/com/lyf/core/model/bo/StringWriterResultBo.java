@@ -1,4 +1,4 @@
-package com.lyf.core.model.to;
+package com.lyf.core.model.bo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import java.io.StringWriter;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class StringWriterResultTo {
+public class StringWriterResultBo {
     String path;
     StringWriter stringWriter;
 }

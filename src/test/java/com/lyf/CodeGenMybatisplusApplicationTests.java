@@ -2,8 +2,7 @@ package com.lyf;
 
 import com.lyf.constant.Constant;
 import com.lyf.core.generator.FreeMarkerGenerator;
-import com.lyf.core.model.to.GenerationRequestInfoTo;
-import com.lyf.core.model.to.StringWriterResultTo;
+import com.lyf.core.model.bo.TableGenerationInfoBo;
 import com.lyf.core.schema.SchemaBuilder;
 import com.lyf.core.schema.TableSchema;
 import com.lyf.dao.MySQLDatabaseInfoDao;
@@ -17,8 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Optional;
 
 @SpringBootTest
 class CodeGenMybatisplusApplicationTests {
@@ -52,7 +49,7 @@ class CodeGenMybatisplusApplicationTests {
     void testFreeMarker(){
         TableInfoEntity tableInfoEntity = mySQLDatabaseInfoDao.queryTable("user_info");
         List<ColumnInfoEntity> columnInfoEntities = mySQLDatabaseInfoDao.queryColumns("user_info");
-        GenerationRequestInfoTo requestInfoTo = new GenerationRequestInfoTo("user_info", null, tableInfoEntity, columnInfoEntities, Constant.DEFAULT_PACKAGE, Constant.DEFAULT_AUTHOR);
+        TableGenerationInfoBo requestInfoTo = new TableGenerationInfoBo("user_info", null, tableInfoEntity, columnInfoEntities, Constant.DEFAULT_PACKAGE, Constant.DEFAULT_AUTHOR);
 
         TableSchema tableSchema = SchemaBuilder.BuildDefaultSchema(requestInfoTo);
 //        Optional<StringWriterResultTo> generate = freeMarkerGenerator.generate(tableSchema, "${entity}.java.ftl");

@@ -1,4 +1,4 @@
-package com.lyf.core.model.to;
+package com.lyf.core.model.bo;
 
 import com.lyf.model.dto.request.TableConfigRequest;
 import com.lyf.model.entity.ColumnInfoEntity;
@@ -6,7 +6,7 @@ import com.lyf.model.entity.TableInfoEntity;
 
 import java.util.List;
 
-public class GenerationRequestInfoTo {
+public class TableGenerationInfoBo {
     private String tableName;
     private String packageName;
     private String author;
@@ -14,9 +14,9 @@ public class GenerationRequestInfoTo {
     private TableInfoEntity tableInfoEntity;
     private List<ColumnInfoEntity> columnInfoEntities;
 
-    public GenerationRequestInfoTo(String tableName, TableConfigRequest tableConfigRequest,
-                                   TableInfoEntity tableInfoEntity, List<ColumnInfoEntity> columnInfoEntities,
-                                   String packageName, String author) {
+    public TableGenerationInfoBo(String tableName, TableConfigRequest tableConfigRequest,
+                                 TableInfoEntity tableInfoEntity, List<ColumnInfoEntity> columnInfoEntities,
+                                 String packageName, String author) {
         this.tableName = tableName;
         this.tableConfigRequest = tableConfigRequest;
         this.tableInfoEntity = tableInfoEntity;

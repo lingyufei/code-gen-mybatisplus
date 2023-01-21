@@ -1,9 +1,8 @@
 package com.lyf.core.schema;
 
-import com.lyf.constant.Constant;
 import com.lyf.core.model.enums.ColumnKeyTypeEnum;
 import com.lyf.core.model.enums.DataTypeEnum;
-import com.lyf.core.model.to.GenerationRequestInfoTo;
+import com.lyf.core.model.bo.TableGenerationInfoBo;
 import com.lyf.model.dto.request.ColumnConfigRequest;
 import com.lyf.model.dto.request.TableConfigRequest;
 import com.lyf.model.entity.ColumnInfoEntity;
@@ -19,12 +18,12 @@ import java.util.stream.Collectors;
 public class SchemaBuilder {
     /**
      * 基于用户的配置请求，转换为TableSchema
-     * @param generationRequestInfoTos
+     * @param tableGenerationInfoBos
      * @return
      */
-    public static List<TableSchema> BuildFromRequestConfig(List<GenerationRequestInfoTo> generationRequestInfoTos){
+    public static List<TableSchema> BuildFromRequestConfig(List<TableGenerationInfoBo> tableGenerationInfoBos){
         //所有信息进行类型转换，汇聚成一个统一的 Schema
-        List<TableSchema> tableSchemaList = generationRequestInfoTos.stream()
+        List<TableSchema> tableSchemaList = tableGenerationInfoBos.stream()
                 .map(SchemaBuilder::BuildFromRequestConfig)
                 .filter(e -> {
                     return !ObjectUtils.isEmpty(e) && !CollectionUtils.isEmpty(e.columnSchemaList);
@@ -36,19 +35,19 @@ public class SchemaBuilder {
 
     /**
      * 基于用户的配置请求，转换为TableSchema
-     * @param generationRequestInfoTo
+     * @param tableGenerationInfoBo
      * @return
      */
-    public static TableSchema BuildFromRequestConfig(GenerationRequestInfoTo generationRequestInfoTo){
-        log.info("Begin to BuildFromRequestConfig: [{}]", generationRequestInfoTo);
+    public static TableSchema BuildFromRequestConfig(TableGenerationInfoBo tableGenerationInfoBo){
+        log.info("Begin to BuildFromRequestConfig: [{}]", tableGenerationInfoBo);
         //获取配置信息
-        TableConfigRequest tableConfigRequest = generationRequestInfoTo.getTableConfigRequest();
-        TableInfoEntity tableInfoEntity = generationRequestInfoTo.getTableInfoEntity();
-        List<ColumnInfoEntity> columnInfoEntities = generationRequestInfoTo.getColumnInfoEntities();
+        TableConfigRequest tableConfigRequest = tableGenerationInfoBo.getTableConfigRequest();
+        TableInfoEntity tableInfoEntity = tableGenerationInfoBo.getTableInfoEntity();
+        List<ColumnInfoEntity> columnInfoEntities = tableGenerationInfoBo.getColumnInfoEntities();
 
         String tableName = tableInfoEntity.getTableName();
-        String packageName = generationRequestInfoTo.getPackageName();
-        String author = generationRequestInfoTo.getAuthor();
+        String packageName = tableGenerationInfoBo.getPackageName();
+        String author = tableGenerationInfoBo.getAuthor();
         String tableComment = tableInfoEntity.getTableComment();
         Map<String, ColumnInfoEntity> columnInfoEntityMap = columnInfoEntities.stream().collect(Collectors.toMap(ColumnInfoEntity::getColumnName, e -> e));
 
@@ -74,12 +73,12 @@ public class SchemaBuilder {
 
     /**
      * 默认全部生成
-     * @param generationRequestInfoTos
+     * @param tableGenerationInfoBos
      * @return
      */
-    public static List<TableSchema> BuildDefaultSchema(List<GenerationRequestInfoTo> generationRequestInfoTos){
+    public static List<TableSchema> BuildDefaultSchema(List<TableGenerationInfoBo> tableGenerationInfoBos){
         //所有信息进行类型转换，汇聚成一个统一的 Schema
-        List<TableSchema> tableSchemaList = generationRequestInfoTos.stream()
+        List<TableSchema> tableSchemaList = tableGenerationInfoBos.stream()
                 .map(SchemaBuilder::BuildDefaultSchema)
                 .filter(e -> !CollectionUtils.isEmpty(e.columnSchemaList))
                 .collect(Collectors.toList());
@@ -87,14 +86,14 @@ public class SchemaBuilder {
         return tableSchemaList;
     }
 
-    public static TableSchema BuildDefaultSchema(GenerationRequestInfoTo generationRequestInfoTo){
+    public static TableSchema BuildDefaultSchema(TableGenerationInfoBo tableGenerationInfoBo){
 //        TableConfigRequest tableConfigRequest = generationRequestInfoTo.getTableConfigRequest();
-        TableInfoEntity tableInfoEntity = generationRequestInfoTo.getTableInfoEntity();
-        List<ColumnInfoEntity> columnInfoEntities = generationRequestInfoTo.getColumnInfoEntities();
+        TableInfoEntity tableInfoEntity = tableGenerationInfoBo.getTableInfoEntity();
+        List<ColumnInfoEntity> columnInfoEntities = tableGenerationInfoBo.getColumnInfoEntities();
 
         String tableName = tableInfoEntity.getTableName();
-        String packageName = generationRequestInfoTo.getPackageName();
-        String author = generationRequestInfoTo.getAuthor();
+        String packageName = tableGenerationInfoBo.getPackageName();
+        String author = tableGenerationInfoBo.getAuthor();
         String tableComment = tableInfoEntity.getTableComment();
 
         List<ColumnSchema> columnSchemas = new ArrayList<>();

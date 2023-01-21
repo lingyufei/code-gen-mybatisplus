@@ -2,10 +2,10 @@ package com.lyf.core.generator;
 
 import com.lyf.constant.Constant;
 import com.lyf.core.model.enums.FilePathEnum;
-import com.lyf.core.model.to.StringWriterResultTo;
+import com.lyf.core.model.bo.StringWriterResultBo;
 import com.lyf.core.schema.SchemaBuilder;
 import com.lyf.core.schema.TableSchema;
-import com.lyf.core.model.to.GenerationRequestInfoTo;
+import com.lyf.core.model.bo.TableGenerationInfoBo;
 import com.lyf.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.ArrayUtils;
@@ -25,23 +25,23 @@ public class GeneratorFacade{
 
     /**
      * 门面生成方法
-     * @param generationRequestInfoTos
+     * @param tableGenerationInfoBos
      * @return filePath -> StringWriter
      */
-    public List<StringWriterResultTo> generateByRequest(List<GenerationRequestInfoTo> generationRequestInfoTos){
-        List<TableSchema> tableSchemas = SchemaBuilder.BuildFromRequestConfig(generationRequestInfoTos);
+    public List<StringWriterResultBo> generateByRequest(List<TableGenerationInfoBo> tableGenerationInfoBos){
+        List<TableSchema> tableSchemas = SchemaBuilder.BuildFromRequestConfig(tableGenerationInfoBos);
 
         return doGenerate(tableSchemas);
     }
 
-    public List<StringWriterResultTo> generateByDefault(List<GenerationRequestInfoTo> generationRequestInfoTos){
-        List<TableSchema> tableSchemas = SchemaBuilder.BuildDefaultSchema(generationRequestInfoTos);
+    public List<StringWriterResultBo> generateByDefault(List<TableGenerationInfoBo> tableGenerationInfoBos){
+        List<TableSchema> tableSchemas = SchemaBuilder.BuildDefaultSchema(tableGenerationInfoBos);
 
         return doGenerate(tableSchemas);
     }
 
-    public List<StringWriterResultTo> doGenerate(List<TableSchema> tableSchemaList){
-        List<StringWriterResultTo> result = new ArrayList<>();
+    public List<StringWriterResultBo> doGenerate(List<TableSchema> tableSchemaList){
+        List<StringWriterResultBo> result = new ArrayList<>();
 
         //FreeMarker生成 entity相关所有类
         result.addAll(generateSpecifiedTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_SPECIFIED_FOLDER_PATH, tableSchemaList));
@@ -58,9 +58,9 @@ public class GeneratorFacade{
      * @param tableSchemaList
      * @return 结果集
      */
-    private List<StringWriterResultTo> generateCommonTemplatesUnderFolder(String folder, List<TableSchema> tableSchemaList){
+    private List<StringWriterResultBo> generateCommonTemplatesUnderFolder(String folder, List<TableSchema> tableSchemaList){
         log.info("begin to generateCommonTemplates");
-        List<StringWriterResultTo> result = new ArrayList<>();
+        List<StringWriterResultBo> result = new ArrayList<>();
 
         Map<String, File> fileMap = getFileMapUnderFolder(folder);
 
@@ -73,16 +73,16 @@ public class GeneratorFacade{
 
             Optional<StringWriter> optional = freeMarkerGenerator.generate(tableSchemaList.get(0), FileUtils.GetRelativePath(file, new File(Constant.FREEMARKER_TEMPLATE_FOLDER)));
             optional.ifPresent(e ->{
-                result.add(new StringWriterResultTo(generationPath, e));
+                result.add(new StringWriterResultBo(generationPath, e));
             });
         }
 
         return result;
     }
 
-    private List<StringWriterResultTo> generateSpecifiedTemplatesUnderFolder(String folder, Collection<TableSchema> tableSchemaList){
+    private List<StringWriterResultBo> generateSpecifiedTemplatesUnderFolder(String folder, Collection<TableSchema> tableSchemaList){
         log.info("begin to generateSpecifiedTemplatesUnderFolder");
-        List<StringWriterResultTo> result = new ArrayList<>();
+        List<StringWriterResultBo> result = new ArrayList<>();
 
         Map<String, File> fileMap = getFileMapUnderFolder(folder);
         for (TableSchema tableSchema: tableSchemaList){
@@ -98,7 +98,7 @@ public class GeneratorFacade{
 
                 Optional<StringWriter> optional = freeMarkerGenerator.generate(tableSchema, FileUtils.GetRelativePath(file, new File(Constant.FREEMARKER_TEMPLATE_FOLDER)));
                 optional.ifPresent(e ->{
-                    result.add(new StringWriterResultTo(generationPath, e));
+                    result.add(new StringWriterResultBo(generationPath, e));
                 });
             }
         }
@@ -155,8 +155,8 @@ public class GeneratorFacade{
      * @return
      */
     @Deprecated
-    public List<StringWriterResultTo> doGenerateByEnumMap(List<TableSchema> tableSchemaList){
-        List<StringWriterResultTo> result = new ArrayList<>();
+    public List<StringWriterResultBo> doGenerateByEnumMap(List<TableSchema> tableSchemaList){
+        List<StringWriterResultBo> result = new ArrayList<>();
 
         //FreeMarker生成
         for (TableSchema tableSchema : tableSchemaList) {
@@ -168,7 +168,7 @@ public class GeneratorFacade{
 
                 Optional<StringWriter> optional = freeMarkerGenerator.generate(tableSchema, file);
                 optional.ifPresent(e ->{
-                    result.add(new StringWriterResultTo(path, e));
+                    result.add(new StringWriterResultBo(path, e));
                 });
             }
         }
@@ -183,7 +183,7 @@ public class GeneratorFacade{
 
             Optional<StringWriter> optional = freeMarkerGenerator.generate(tableSchema, Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_NAME + commonFile);
             optional.ifPresent(e ->{
-                result.add(new StringWriterResultTo(path, e));
+                result.add(new StringWriterResultBo(path, e));
             });
         }
         return result;

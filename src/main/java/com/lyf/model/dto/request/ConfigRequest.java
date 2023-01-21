@@ -12,5 +12,6 @@ import java.util.List;
 public class ConfigRequest {
     private String packageName;
     private String author;
-    List<TableConfigRequest> tableConfigRequestList;
+    private OptionalConfigRequest optionalConfigRequest;
+    private List<TableConfigRequest> tableConfigRequestList;
 }
