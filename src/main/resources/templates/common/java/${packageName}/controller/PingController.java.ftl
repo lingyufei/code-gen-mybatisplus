@@ -1,6 +1,6 @@
-package com.lyf.controller;
+package ${packageName}.controller;
 
-import com.lyf.utils.R;
+import ${packageName}.utils.R;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
