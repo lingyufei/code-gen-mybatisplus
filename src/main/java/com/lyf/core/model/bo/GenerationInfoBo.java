@@ -14,7 +14,6 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class GenerationInfoBo {
-    private String tableName;
     private String packageName;
     private String author;
     private OptionalGenerationBo optionalGenerationBo;

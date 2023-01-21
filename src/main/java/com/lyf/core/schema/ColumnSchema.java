@@ -7,7 +7,7 @@ import com.lyf.model.dto.request.PageRequest;
 import com.lyf.utils.StringUtils;
 import org.springframework.util.ObjectUtils;
 
-public class ColumnSchema {
+public class ColumnSchema implements Schema{
 
     //sql LOWER_UNDERSCORE user_info
     private String columnName;

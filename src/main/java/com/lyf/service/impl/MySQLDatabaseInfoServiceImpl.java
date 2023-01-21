@@ -4,11 +4,14 @@ import com.alibaba.fastjson.JSON;
 import com.lyf.constant.Constant;
 import com.lyf.core.fileSaver.ZipFileSaver;
 import com.lyf.core.generator.GeneratorFacade;
+import com.lyf.core.model.bo.GenerationInfoBo;
+import com.lyf.core.model.bo.OptionalGenerationBo;
 import com.lyf.core.model.bo.TableGenerationInfoBo;
 import com.lyf.core.model.bo.StringWriterResultBo;
 import com.lyf.dao.MySQLDatabaseInfoDao;
 import com.lyf.exception.BusinessException;
 import com.lyf.model.dto.request.ConfigRequest;
+import com.lyf.model.dto.request.OptionalConfigRequest;
 import com.lyf.model.dto.request.TableConfigRequest;
 import com.lyf.model.dto.response.ColumnInfoResponse;
 import com.lyf.model.dto.response.TableInfoResponse;
@@ -80,6 +83,8 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
         List<TableConfigRequest> tableConfigRequests = configRequest.getTableConfigRequestList();
         String packageName = Optional.ofNullable(configRequest.getPackageName()).orElse(Constant.DEFAULT_PACKAGE);
         String author = Optional.ofNullable(configRequest.getAuthor()).orElse(Constant.DEFAULT_PACKAGE);
+        OptionalConfigRequest optionalConfigRequest = Optional.ofNullable(configRequest.getOptionalConfigRequest())
+                                                                .orElse(new OptionalConfigRequest());
 
         //校验，过滤空数据
         tableConfigRequests = tableConfigRequests.stream().filter(tableConfigRequest -> {
@@ -102,7 +107,10 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
                     new TableGenerationInfoBo(tableName, tableConfigRequest, tableInfoEntity, columnInfoEntities, author, packageName));
         }
 
-        List<StringWriterResultBo> resultToList = generatorFacade.generateByRequest(generationRequestInfos);
+        OptionalGenerationBo optionalGenerationBo = new OptionalGenerationBo(optionalConfigRequest.getIgnoreThreadPool(), optionalConfigRequest.getIgnoreLogInterceptor());
+        GenerationInfoBo generationInfoBo = new GenerationInfoBo(packageName, author, optionalGenerationBo, generationRequestInfos);
+
+        List<StringWriterResultBo> resultToList = generatorFacade.generateByRequest(generationInfoBo);
         return ZipFileSaver.Save(resultToList);
     }
 

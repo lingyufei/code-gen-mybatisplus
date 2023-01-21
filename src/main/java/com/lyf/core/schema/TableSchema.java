@@ -5,7 +5,7 @@ import com.lyf.utils.StringUtils;
 
 import java.util.List;
 
-public class TableSchema {
+public class TableSchema implements Schema{
     //sql LOWER_UNDERSCORE user_info
     private String tableName;
 

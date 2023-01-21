@@ -13,7 +13,7 @@ import java.util.Optional;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class GeneralSchema {
+public class GeneralSchema implements Schema{
 
     private String author;
 

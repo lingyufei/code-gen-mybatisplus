@@ -1,8 +1,12 @@
 package com.lyf.core.generator;
 
 import com.lyf.constant.Constant;
+import com.lyf.core.model.bo.GenerationInfoBo;
+import com.lyf.core.model.bo.OptionalGenerationBo;
 import com.lyf.core.model.enums.FilePathEnum;
 import com.lyf.core.model.bo.StringWriterResultBo;
+import com.lyf.core.schema.GeneralSchema;
+import com.lyf.core.schema.OptionalSchema;
 import com.lyf.core.schema.SchemaBuilder;
 import com.lyf.core.schema.TableSchema;
 import com.lyf.core.model.bo.TableGenerationInfoBo;
@@ -25,9 +29,22 @@ public class GeneratorFacade{
 
     /**
      * 门面生成方法
-     * @param tableGenerationInfoBos
+     * @param generationInfoBo
      * @return filePath -> StringWriter
      */
+    public List<StringWriterResultBo> generateByRequest(GenerationInfoBo generationInfoBo){
+        //获取数据
+        String author = generationInfoBo.getAuthor();
+        String packageName = generationInfoBo.getPackageName();
+        OptionalGenerationBo optionalGenerationBo = generationInfoBo.getOptionalGenerationBo();
+        //构建Schema
+        OptionalSchema optionalSchema = new OptionalSchema(optionalGenerationBo.getIgnoreThreadPool(), optionalGenerationBo.getIgnoreLogInterceptor());
+        List<TableSchema> tableSchemas = SchemaBuilder.BuildFromRequestConfig(generationInfoBo.getTableGenerationInfoBoList());
+        //开始生成
+        new GeneralSchema(author, packageName, optionalSchema, tableSchemas);
+        return doGenerate(tableSchemas);
+    }
+
     public List<StringWriterResultBo> generateByRequest(List<TableGenerationInfoBo> tableGenerationInfoBos){
         List<TableSchema> tableSchemas = SchemaBuilder.BuildFromRequestConfig(tableGenerationInfoBos);
 
@@ -39,6 +56,22 @@ public class GeneratorFacade{
 
         return doGenerate(tableSchemas);
     }
+
+    public List<StringWriterResultBo> doGenerate(GeneralSchema generalSchema){
+        List<TableSchema> tableSchemaList = generalSchema.getTableSchemaList();
+
+        List<StringWriterResultBo> result = new ArrayList<>();
+        //FreeMarker生成 entity相关所有类
+        result.addAll(generateSpecifiedTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_SPECIFIED_FOLDER_PATH, tableSchemaList));
+
+        //生成所有common
+        result.addAll(generateCommonTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_PATH, new ArrayList<>(Collections.singleton(tableSchemaList.get(0)))));
+
+        //生成所有可选项
+        result.addAll(generateCommonTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_OPTIONAL_FOLDER_NAME, new ArrayList<>(Collections.singleton(tableSchemaList.get(0)))));
+        return result;
+    }
+
 
     public List<StringWriterResultBo> doGenerate(List<TableSchema> tableSchemaList){
         List<StringWriterResultBo> result = new ArrayList<>();

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OptionalSchema {
+public class OptionalSchema implements Schema{
     //线程池
     private Boolean ignoreThreadPool = false;
 
