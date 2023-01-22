@@ -1,6 +1,8 @@
 package com.lyf.core.generator;
 
 import com.lyf.constant.Constant;
+import com.lyf.core.generator.templateGenerator.TemplateGenerator;
+import com.lyf.core.generator.templateGenerator.TemplateGeneratorFactory;
 import com.lyf.core.model.bo.GenerationInfoBo;
 import com.lyf.core.model.bo.OptionalGenerationBo;
 import com.lyf.core.model.enums.FilePathEnum;
@@ -67,17 +69,22 @@ public class GeneratorFacade{
     }
 
     public List<StringWriterResultBo> doGenerate(GeneralSchema generalSchema){
-        List<TableSchema> tableSchemaList = generalSchema.getTableSchemaList();
+//        List<TableSchema> tableSchemaList = generalSchema.getTableSchemaList();
 
         List<StringWriterResultBo> result = new ArrayList<>();
-        //FreeMarker生成 entity相关所有类
-        result.addAll(generateSpecifiedTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_SPECIFIED_FOLDER_PATH, tableSchemaList));
+//        //FreeMarker生成 entity相关所有类
+//        result.addAll(generateSpecifiedTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_SPECIFIED_FOLDER_PATH, tableSchemaList));
+//
+//        //生成所有common
+//        result.addAll(generateCommonTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_PATH, new ArrayList<>(Collections.singleton(tableSchemaList.get(0)))));
+//
+//        //生成所有可选项
+//        result.addAll(generateCommonTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_OPTIONAL_FOLDER_PATH, new ArrayList<>(Collections.singleton(tableSchemaList.get(0)))));
 
-        //生成所有common
-        result.addAll(generateCommonTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_PATH, new ArrayList<>(Collections.singleton(tableSchemaList.get(0)))));
+        for (TemplateGenerator templateGenerator : TemplateGeneratorFactory.GetAllGenerator()) {
+            result.addAll(templateGenerator.generate(generalSchema));
+        }
 
-        //生成所有可选项
-        result.addAll(generateCommonTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_OPTIONAL_FOLDER_PATH, new ArrayList<>(Collections.singleton(tableSchemaList.get(0)))));
         return result;
     }
 
@@ -113,7 +120,7 @@ public class GeneratorFacade{
             //Final name
             String generationPath = entry.getKey().replaceAll("\\$\\{packageName}", packagePath);
 
-            Optional<StringWriter> optional = freeMarkerGenerator.generate(tableSchemaList.get(0), FileUtils.GetRelativePath(file, new File(Constant.FREEMARKER_TEMPLATE_FOLDER)));
+            Optional<StringWriter> optional = freeMarkerGenerator.Generate(tableSchemaList.get(0), FileUtils.GetRelativePath(file, new File(Constant.FREEMARKER_TEMPLATE_FOLDER)));
             optional.ifPresent(e ->{
                 result.add(new StringWriterResultBo(generationPath, e));
             });
@@ -138,7 +145,7 @@ public class GeneratorFacade{
                 String generationPath = entry.getKey().replaceAll("\\$\\{packageName}", packagePath)
                         .replaceAll("\\$\\{entity}", entityName);
 
-                Optional<StringWriter> optional = freeMarkerGenerator.generate(tableSchema, FileUtils.GetRelativePath(file, new File(Constant.FREEMARKER_TEMPLATE_FOLDER)));
+                Optional<StringWriter> optional = freeMarkerGenerator.Generate(tableSchema, FileUtils.GetRelativePath(file, new File(Constant.FREEMARKER_TEMPLATE_FOLDER)));
                 optional.ifPresent(e ->{
                     result.add(new StringWriterResultBo(generationPath, e));
                 });
@@ -208,7 +215,7 @@ public class GeneratorFacade{
                 String path = Constant.BASE_PATH + filePathEnum.getFilePath().replaceAll("\\$\\{packageName}", tableSchema.getPackagePath())
                         + tableSchema.getUpperCamelName() + FileUtils.GetRealFileName(file, filePathEnum.getFileName());;
 
-                Optional<StringWriter> optional = freeMarkerGenerator.generate(tableSchema, file);
+                Optional<StringWriter> optional = freeMarkerGenerator.Generate(tableSchema, file);
                 optional.ifPresent(e ->{
                     result.add(new StringWriterResultBo(path, e));
                 });
@@ -223,7 +230,7 @@ public class GeneratorFacade{
             String path = Constant.BASE_PATH + filePathEnum.getFilePath().replaceAll("\\$\\{packageName}", tableSchema.getPackagePath())
                                              + FileUtils.GetRealFileName(commonFile, filePathEnum.getFileName());
 
-            Optional<StringWriter> optional = freeMarkerGenerator.generate(tableSchema, Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_NAME + commonFile);
+            Optional<StringWriter> optional = freeMarkerGenerator.Generate(tableSchema, Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_NAME + commonFile);
             optional.ifPresent(e ->{
                 result.add(new StringWriterResultBo(path, e));
             });
