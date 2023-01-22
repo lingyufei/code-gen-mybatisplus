@@ -1,5 +1,6 @@
 package com.lyf.core.generator;
 
+import com.lyf.core.schema.Schema;
 import com.lyf.core.schema.TableSchema;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -20,14 +21,14 @@ public class FreeMarkerGenerator implements Generator{
     Configuration configuration;
 
     @Override
-    public Optional<StringWriter> generate(TableSchema tableSchema, String fileName) {
+    public Optional<StringWriter> generate(Schema schema, String fileName) {
 
         Template temp = null;
         StringWriter stringWriter = new StringWriter();
         try {
             temp = configuration.getTemplate(fileName);
-            temp.process(tableSchema, stringWriter);
-            log.info("generate [{}] for table [{}] successfully", fileName, tableSchema.getTableName());
+            temp.process(schema, stringWriter);
+            log.info("generate [{}] successfully for schema [{}] ", fileName, schema);
             return Optional.of(stringWriter);
         } catch (IOException | TemplateException e) {
             log.warn("FreeMarkerGenerator processing [{}] exception, [{}]", fileName, e);
