@@ -1,13 +1,12 @@
-package com.lyf.core.generator.templateGenerator;
+package com.lyf.core.generator.template;
 
 import com.lyf.constant.Constant;
-import com.lyf.core.generator.FreeMarkerGenerator;
+import com.lyf.core.generator.file.FreeMarkerGenerator;
 import com.lyf.core.model.bo.StringWriterResultBo;
 import com.lyf.core.schema.GeneralSchema;
 import com.lyf.core.schema.TableSchema;
 import com.lyf.utils.FileUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.File;

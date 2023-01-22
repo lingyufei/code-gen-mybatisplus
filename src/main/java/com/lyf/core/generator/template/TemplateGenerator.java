@@ -1,12 +1,9 @@
-package com.lyf.core.generator.templateGenerator;
+package com.lyf.core.generator.template;
 
 import com.lyf.core.model.bo.StringWriterResultBo;
 import com.lyf.core.schema.GeneralSchema;
-import com.lyf.core.schema.Schema;
 
-import java.io.StringWriter;
 import java.util.List;
-import java.util.Optional;
 
 public interface TemplateGenerator {
     /**

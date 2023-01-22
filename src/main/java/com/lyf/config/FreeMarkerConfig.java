@@ -9,10 +9,9 @@ import java.io.IOException;
 
 import static com.lyf.constant.Constant.FREEMARKER_TEMPLATE_FOLDER;
 
-@org.springframework.context.annotation.Configuration
 public class FreeMarkerConfig {
-    @Bean
-    public Configuration configuration() throws IOException {
+
+    public static Configuration Configuration() throws IOException {
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
         cfg.setDirectoryForTemplateLoading(new File(FREEMARKER_TEMPLATE_FOLDER));
         cfg.setDefaultEncoding("UTF-8");

@@ -1,4 +1,4 @@
-package com.lyf.core.generator.templateGenerator;
+package com.lyf.core.generator.template;
 
 import com.lyf.constant.Constant;
 import com.lyf.core.model.bo.StringWriterResultBo;

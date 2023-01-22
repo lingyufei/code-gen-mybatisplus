@@ -1,8 +1,7 @@
-package com.lyf.core.generator.templateGenerator;
+package com.lyf.core.generator.template;
 
 import com.lyf.constant.Constant;
 
-import javax.annotation.Resource;
 import java.util.*;
 
 public class TemplateGeneratorFactory {

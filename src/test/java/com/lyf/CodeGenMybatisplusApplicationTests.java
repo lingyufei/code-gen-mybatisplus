@@ -1,7 +1,7 @@
 package com.lyf;
 
 import com.lyf.constant.Constant;
-import com.lyf.core.generator.FreeMarkerGenerator;
+import com.lyf.core.generator.file.FreeMarkerGenerator;
 import com.lyf.core.model.bo.TableGenerationInfoBo;
 import com.lyf.core.schema.SchemaBuilder;
 import com.lyf.core.schema.TableSchema;

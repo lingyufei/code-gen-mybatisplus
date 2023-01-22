@@ -1,5 +1,6 @@
-package com.lyf.core.generator;
+package com.lyf.core.generator.file;
 
+import com.lyf.config.FreeMarkerConfig;
 import com.lyf.core.schema.Schema;
 import com.lyf.core.schema.TableSchema;
 import freemarker.template.Configuration;
@@ -17,8 +18,7 @@ import java.util.Optional;
 
 import static com.lyf.constant.Constant.FREEMARKER_TEMPLATE_FOLDER;
 
-//todo 改为非 ioc  implements Generator
-@Component
+//todo 实现接口
 @Slf4j
 public class FreeMarkerGenerator{
 
@@ -28,14 +28,7 @@ public class FreeMarkerGenerator{
 
     static {
         try {
-            Configuration cfg = new Configuration(Configuration.VERSION_2_3_29);
-            cfg.setDirectoryForTemplateLoading(new File(FREEMARKER_TEMPLATE_FOLDER));
-            cfg.setDefaultEncoding("UTF-8");
-            cfg.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
-            cfg.setLogTemplateExceptions(false);
-            cfg.setWrapUncheckedExceptions(true);
-            cfg.setFallbackOnNullLoopVariable(false);
-            Configuration = cfg;
+            Configuration = FreeMarkerConfig.Configuration();
         } catch (IOException e) {
             log.warn("Fail to load Configuration for FreeMarkerGenerator, error: + ", e);
         }
