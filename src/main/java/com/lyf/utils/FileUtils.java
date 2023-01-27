@@ -1,9 +1,14 @@
 package com.lyf.utils;
 
+import com.lyf.constant.ExceptionCodeEnum;
+import com.lyf.exception.BusinessException;
+import org.apache.commons.io.IOUtils;
 import org.springframework.util.ObjectUtils;
 import org.springframework.util.StringUtils;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -80,5 +85,19 @@ public class FileUtils {
 
     public static String GetRelativePath(File child, File parent){
         return parent.toURI().relativize(child.toURI()).getPath();
+    }
+
+    public static void ResponseFileToHttp(byte[] data, String fileName, HttpServletResponse response){
+        response.reset();
+        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        response.addHeader("Content-Length", "" + data.length);
+        response.setContentType("application/octet-stream; charset=UTF-8");
+
+        try {
+            IOUtils.write(data, response.getOutputStream());
+        }catch (IOException e) {
+            response.reset();
+            throw new BusinessException("", ExceptionCodeEnum.GEN_FILE_OUTPUT_EXCEPTION, e);
+        }
     }
 }

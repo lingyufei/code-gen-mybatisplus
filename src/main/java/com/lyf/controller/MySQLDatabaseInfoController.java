@@ -8,6 +8,7 @@ import com.lyf.model.dto.request.TableConfigRequest;
 import com.lyf.model.dto.response.ColumnInfoResponse;
 import com.lyf.model.dto.response.TableInfoResponse;
 import com.lyf.service.MySQLDatabaseInfoService;
+import com.lyf.utils.FileUtils;
 import com.lyf.utils.R;
 import org.apache.commons.io.IOUtils;
 import org.springframework.util.CollectionUtils;
@@ -41,40 +42,29 @@ public class MySQLDatabaseInfoController {
         return R.ok().put("data", map);
     }
 
+    /**
+     * 基于配置生成模板，必须显式声明才会创建
+     * @param configRequest
+     * @param response
+     * @return
+     */
     @PostMapping("/generate")
-    public R generate(@RequestBody ConfigRequest configRequest, HttpServletResponse response){
+    public void generate(@RequestBody ConfigRequest configRequest, HttpServletResponse response){
         if(CollectionUtils.isEmpty(configRequest.getTableConfigRequestList())){
             throw new BusinessException("", FORM_VALID_EXCEPTION, JSON.toJSONString(configRequest));
         }
         byte[] result = mySQLDatabaseInfoService.generate(configRequest);
-        response.reset();
-        response.setHeader("Content-Disposition", "attachment; filename=\"defaultCode.zip\"");
-        response.addHeader("Content-Length", "" + result.length);
-        response.setContentType("application/octet-stream; charset=UTF-8");
-
-        try {
-            IOUtils.write(result, response.getOutputStream());
-        }catch (IOException e) {
-            response.reset();
-            throw new BusinessException("", ExceptionCodeEnum.GEN_FILE_OUTPUT_EXCEPTION, e);
-        }
-
-        return R.ok();
+        FileUtils.ResponseFileToHttp(result, "code_gen_result.zip", response);
     }
 
+    /**
+     * 默认配置生成，只有packageName和author参数有效，其他全部默认
+     * @param configRequest
+     * @param response
+     */
     @GetMapping("/generate/default")
     public void generateByDefault(@RequestBody(required = false) ConfigRequest configRequest, HttpServletResponse response){
         byte[] result = mySQLDatabaseInfoService.generateByDefault(configRequest);
-        response.reset();
-        response.setHeader("Content-Disposition", "attachment; filename=\"defaultCode.zip\"");
-        response.addHeader("Content-Length", "" + result.length);
-        response.setContentType("application/octet-stream; charset=UTF-8");
-
-        try {
-            IOUtils.write(result, response.getOutputStream());
-        }catch (IOException e) {
-            response.reset();
-            throw new BusinessException("", ExceptionCodeEnum.GEN_FILE_OUTPUT_EXCEPTION, e);
-        }
+        FileUtils.ResponseFileToHttp(result, "default_code_gen_result.zip", response);
     }
 }
