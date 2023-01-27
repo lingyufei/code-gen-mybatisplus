@@ -6,14 +6,12 @@ import ${packageName}.model.dto.request.PageRequest;
 import ${packageName}.model.dto.request.${upperCamelName}Request;
 import ${packageName}.model.dto.response.PageResponse;
 import ${packageName}.model.dto.response.${upperCamelName}Response;
-import ${packageName}.entity.${upperCamelName};
+import ${packageName}.model.entity.${upperCamelName};
 
 /**
 *
 * ${tableName} service
-* @author LYF
-* @email 1187112693@qq.com
-* @date 2023-01-17 09:29:27
+* @author ${author}
 */
 public interface ${upperCamelName}Service extends IService<${upperCamelName}>{
 

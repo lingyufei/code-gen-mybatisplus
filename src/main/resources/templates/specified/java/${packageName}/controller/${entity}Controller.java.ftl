@@ -14,9 +14,7 @@ import java.util.Map;
 
 /**
 * ${tableName} controller
-* @author chenshun
-* @email sunlightcs@gmail.com
-* @date 2023-01-17 09:29:27
+* @author ${author}
 */
 @RestController
 @RequestMapping("${lowerCamelName}")
@@ -28,7 +26,7 @@ private ${upperCamelName}Service ${lowerCamelName}Service;
     * 列表
     */
     @RequestMapping("/list")
-    public R list(@RequestParam Map<String, String> params){
+    public R list(@RequestParam Map<String, Object> params){
         PageRequest pageRequest = new PageRequest(params);
         PageResponse<${upperCamelName}Response> page = ${lowerCamelName}Service.queryPage(pageRequest);
 
@@ -80,7 +78,7 @@ private ${upperCamelName}Service ${lowerCamelName}Service;
     * 删除
     */
     @DeleteMapping("/deleteBatch")
-    public R delete(@RequestBody Long[] ids){
+    public R delete(@RequestParam Long[] ids){
         ${lowerCamelName}Service.removeByIds(Arrays.asList(ids));
 
         return R.ok();

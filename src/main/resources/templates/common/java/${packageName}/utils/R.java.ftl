@@ -2,7 +2,7 @@ package ${packageName}.utils;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
-import ${packageName}.enums.ExceptionCodeEnum;
+import ${packageName}.constant.enums.ExceptionCodeEnum;
 import ${packageName}.exception.BusinessException;
 
 import java.util.HashMap;
@@ -10,8 +10,7 @@ import java.util.Map;
 
 /**
 * 通用返回类
-* @author LYF_
-* @create 2022-05-09 10:06
+* @author ${author}
 */
 public class R extends HashMap<String, Object> {
     private static final long serialVersionUID = 1L;
@@ -86,4 +85,3 @@ public class R extends HashMap<String, Object> {
     return  (Integer)this.get("code");
     }
 }
-

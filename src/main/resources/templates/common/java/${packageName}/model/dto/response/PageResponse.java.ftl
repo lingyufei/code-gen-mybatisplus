@@ -9,10 +9,7 @@ import java.util.List;
 
 /**
 * 分页dto
-*
-* @author chenshun
-* @email sunlightcs@gmail.com
-* @date 2016年11月4日 下午12:59:00
+* @author ${author}
 */
 @Data
 @AllArgsConstructor

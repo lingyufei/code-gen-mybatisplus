@@ -4,8 +4,8 @@ import java.util.concurrent.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 /**
-* @author LYF_
-* @create 2022-09-24 16:01
+* 线程池
+* @author ${author}
 */
 public class ThreadPool {
     public static final Executor MY_THREAD_POOL = new ThreadPoolExecutor(4, 8, 5,

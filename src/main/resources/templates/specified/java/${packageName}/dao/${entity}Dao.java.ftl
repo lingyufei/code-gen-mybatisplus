@@ -6,9 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 /**
 * ${tableName} Mapper
-* @author LYF
-* @email 1187112693@qq.com
-* @date 2023-01-17 09:29:27
+* @author ${author}
 */
 @Mapper
 public interface ${upperCamelName}Dao extends BaseMapper<${upperCamelName}> {
