@@ -53,23 +53,12 @@ public class GeneratorFacade{
 
     public List<StringWriterResultBo> doGenerate(GeneralSchema generalSchema){
         List<StringWriterResultBo> result = new ArrayList<>();
-//        //FreeMarker生成 entity相关所有类
-//        result.addAll(generateSpecifiedTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_SPECIFIED_FOLDER_PATH, tableSchemaList));
-//
-//        //生成所有common
-//        result.addAll(generateCommonTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_PATH, new ArrayList<>(Collections.singleton(tableSchemaList.get(0)))));
-//
-//        //生成所有可选项
-//        result.addAll(generateCommonTemplatesUnderFolder(Constant.FREEMARKER_TEMPLATE_OPTIONAL_FOLDER_PATH, new ArrayList<>(Collections.singleton(tableSchemaList.get(0)))));
 
         for (TemplateGenerator templateGenerator : TemplateGeneratorFactory.GetAllGenerator()) {
             result.addAll(templateGenerator.generate(generalSchema));
         }
-
         return result;
     }
-
-
 
     /**
      * 基于 Enum 指定文件生成路径，过时！现在使用文件路径系统解析
