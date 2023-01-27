@@ -2,8 +2,7 @@ package ${packageName}.constant.enums;
 
 /**
 * 异常枚举类
-* @author LYF_
-* @create 2022-06-10 14:28
+* @author ${author}
 */
 public enum ExceptionCodeEnum {
     SUCCESS(200, "success"),

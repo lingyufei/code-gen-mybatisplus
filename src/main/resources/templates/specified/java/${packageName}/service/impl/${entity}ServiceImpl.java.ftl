@@ -10,19 +10,18 @@ import ${packageName}.model.dto.request.${upperCamelName}Request;
 import ${packageName}.model.dto.response.PageResponse;
 import ${packageName}.model.dto.response.${upperCamelName}Response;
 import ${packageName}.model.entity.${upperCamelName};
-import ${packageName}.mapper.${upperCamelName}Mapper;
+import ${packageName}.model.mapper.${upperCamelName}Mapper;
 import ${packageName}.service.${upperCamelName}Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
 * ${tableName} ServiceImpl
-* @author chenshun
-* @email sunlightcs@gmail.com
-* @date 2023-01-17 09:29:27
+* @author ${author}
 */
 @Service("${lowerCamelName}Service")
 public class ${upperCamelName}ServiceImpl extends ServiceImpl<${upperCamelName}Dao, ${upperCamelName}> implements ${upperCamelName}Service {
@@ -33,14 +32,15 @@ public class ${upperCamelName}ServiceImpl extends ServiceImpl<${upperCamelName}D
     
     public PageResponse<${upperCamelName}Response> queryPage(PageRequest pageRequest) {
         try(Page<?> page = PageHelper.startPage(pageRequest.getPage(), pageRequest.getLimit())){
-        List<${upperCamelName}> ${lowerCamelName}s = this.list(new QueryWrapper<${upperCamelName}>()
-                .orderBy(true, !pageRequest.getDesc(), "id"));
+            List<${upperCamelName}> ${lowerCamelName}s = this.list(new QueryWrapper<${upperCamelName}>()
+                    .orderBy(true, !pageRequest.getDesc(), "id"));
 
-        //类型转换
-        List<${upperCamelName}Response> ${lowerCamelName}ResponseList = ${lowerCamelName}s.stream()
-            .map(${lowerCamelName} -> ${lowerCamelName}Mapper.${lowerCamelName}2${upperCamelName}Response(${lowerCamelName}))
-            .collect(Collectors.toList());
-        return new PageResponse<>(${lowerCamelName}ResponseList, page.getTotal(), pageRequest.getLimit(), pageRequest.getPage(), pageRequest.getDesc());
+            //类型转换
+            List<${upperCamelName}Response> ${lowerCamelName}ResponseList = ${lowerCamelName}s.stream()
+                .map(${lowerCamelName} -> ${lowerCamelName}Mapper.${lowerCamelName}2${upperCamelName}Response(${lowerCamelName}))
+                .collect(Collectors.toList());
+            return new PageResponse<>(${lowerCamelName}ResponseList, page.getTotal(), pageRequest.getLimit(), pageRequest.getPage(), pageRequest.getDesc());
+        }
     }
     
     @Override

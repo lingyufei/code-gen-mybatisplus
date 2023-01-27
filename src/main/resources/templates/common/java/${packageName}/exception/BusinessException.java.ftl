@@ -3,8 +3,8 @@ package ${packageName}.exception;
 import ${packageName}.constant.enums.ExceptionCodeEnum;
 
 /**
- * @author LYF_
- * @create 2022-06-10 14:28
+ * 通用异常类
+ * @author ${author}
  */
 public class BusinessException extends RuntimeException {
     //业务类型

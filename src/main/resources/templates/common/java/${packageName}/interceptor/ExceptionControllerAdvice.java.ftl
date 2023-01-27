@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import java.util.HashMap;
 import java.util.Map;
 
-import static ${packageName}.constant.enums.ExceptionCodeEnum.DB_DUPLICATE_KEY_EXCEPTION;
-import static ${packageName}.constant.enums.ExceptionCodeEnum.SERVER_EXCEPTION;
-
 /**
-* @author LYF_
-* @create 2022-05-09 12:04
+* 全局异常捕获
+* @author ${author}
 */
 @RestControllerAdvice(basePackages = "${packageName}")
 @Slf4j
@@ -48,13 +45,13 @@ public class ExceptionControllerAdvice {
     @ExceptionHandler(value = DuplicateKeyException.class)
         public R handleLoginUniqueException(DuplicateKeyException e) {
         log.warn("提交的数据与数据库数据存在冲突,原因如下：\r" + e);
-        return R.error(DB_DUPLICATE_KEY_EXCEPTION);
+        return R.error(ExceptionCodeEnum.DB_DUPLICATE_KEY_EXCEPTION);
     }
     
     //其他异常处理
     @ExceptionHandler(value = Exception.class)
     public R handleLoginException(Exception e) {
         log.warn("业务不可控异常: " + e.getMessage() + " 具体如下：\r" + e);
-        return R.error(SERVER_EXCEPTION);
+        return R.error(ExceptionCodeEnum.SERVER_EXCEPTION);
     }
 }

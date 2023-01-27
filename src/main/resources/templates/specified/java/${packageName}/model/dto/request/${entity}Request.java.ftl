@@ -6,9 +6,7 @@ import lombok.NoArgsConstructor;
 
 /**
 * ${tableName} Request
-* @author chenshun
-* @email sunlightcs@gmail.com
-* @date 2023-01-17 09:29:27
+* @author ${author}
 */
 @Data
 @AllArgsConstructor
@@ -17,7 +15,7 @@ public class ${upperCamelName}Request {
 
     <#list columnSchemaList as columnSchema>
     <#if !columnSchema.ignoreRequest>
-        private ${columnSchema.dataType.javaType} ${columnSchema.lowerCamelName};
+    private ${columnSchema.dataType.javaType} ${columnSchema.lowerCamelName};
     </#if>
 
     </#list>

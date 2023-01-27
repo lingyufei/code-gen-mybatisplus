@@ -5,7 +5,7 @@
 
     <resultMap type="${packageName}.model.entity.${upperCamelName}" id="${lowerCamelName}Map">
     <#list columnSchemaList as columnSchema>
-        <result property="${columnSchema.lowerCamelName}" column="${columnSchema.columnName}" jdbcType="${columnSchema.dataType.mysqlType}"/>
+        <result property="${columnSchema.lowerCamelName}" column="${columnSchema.columnName}"/>
     </#list>
     </resultMap>
 
