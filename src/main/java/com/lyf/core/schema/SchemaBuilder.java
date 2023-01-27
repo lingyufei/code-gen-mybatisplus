@@ -1,5 +1,7 @@
 package com.lyf.core.schema;
 
+import com.lyf.core.model.bo.GenerationInfoBo;
+import com.lyf.core.model.bo.OptionalGenerationBo;
 import com.lyf.core.model.enums.ColumnKeyTypeEnum;
 import com.lyf.core.model.enums.DataTypeEnum;
 import com.lyf.core.model.bo.TableGenerationInfoBo;
@@ -17,10 +19,22 @@ import java.util.stream.Collectors;
 @Slf4j
 public class SchemaBuilder {
     /**
-     * 基于用户的配置请求，转换为TableSchema
-     * @param tableGenerationInfoBos
+     * 基于用户的配置请求，转换为 GeneralSchema
+     * @param generationInfoBo
      * @return
      */
+    public static GeneralSchema BuildFromRequestConfig(GenerationInfoBo generationInfoBo){
+        //所有信息进行类型转换，汇聚成一个统一的 Schema
+        String author = generationInfoBo.getAuthor();
+        String packageName = generationInfoBo.getPackageName();
+        OptionalGenerationBo optionalGenerationBo = generationInfoBo.getOptionalGenerationBo();
+        //构建Schema
+        OptionalSchema optionalSchema = new OptionalSchema(optionalGenerationBo.getIgnoreThreadPool(), optionalGenerationBo.getIgnoreLogInterceptor());
+        List<TableSchema> tableSchemas = BuildFromRequestConfig(generationInfoBo.getTableGenerationInfoBoList());
+        return new GeneralSchema(author, packageName, optionalSchema, tableSchemas);
+    }
+
+
     public static List<TableSchema> BuildFromRequestConfig(List<TableGenerationInfoBo> tableGenerationInfoBos){
         //所有信息进行类型转换，汇聚成一个统一的 Schema
         List<TableSchema> tableSchemaList = tableGenerationInfoBos.stream()
@@ -73,9 +87,18 @@ public class SchemaBuilder {
 
     /**
      * 默认全部生成
-     * @param tableGenerationInfoBos
+     * @param generationInfoBo
      * @return
      */
+    public static GeneralSchema BuildDefaultSchema(GenerationInfoBo generationInfoBo){
+        OptionalSchema optionalSchema = new OptionalSchema(generationInfoBo.getOptionalGenerationBo().getIgnoreThreadPool(),
+                generationInfoBo.getOptionalGenerationBo().getIgnoreLogInterceptor());
+
+        List<TableSchema> tableSchemas = SchemaBuilder.BuildDefaultSchema(generationInfoBo.getTableGenerationInfoBoList());
+        return new GeneralSchema(generationInfoBo.getAuthor(),
+                generationInfoBo.getPackageName(), optionalSchema, tableSchemas);
+    }
+
     public static List<TableSchema> BuildDefaultSchema(List<TableGenerationInfoBo> tableGenerationInfoBos){
         //所有信息进行类型转换，汇聚成一个统一的 Schema
         List<TableSchema> tableSchemaList = tableGenerationInfoBos.stream()

@@ -28,26 +28,13 @@ public class GeneratorFacade{
      * @return filePath -> StringWriter
      */
     public List<StringWriterResultBo> generateByRequest(GenerationInfoBo generationInfoBo){
-        //获取数据
-        String author = generationInfoBo.getAuthor();
-        String packageName = generationInfoBo.getPackageName();
-        OptionalGenerationBo optionalGenerationBo = generationInfoBo.getOptionalGenerationBo();
-        //构建Schema
-        OptionalSchema optionalSchema = new OptionalSchema(optionalGenerationBo.getIgnoreThreadPool(), optionalGenerationBo.getIgnoreLogInterceptor());
-        List<TableSchema> tableSchemas = SchemaBuilder.BuildFromRequestConfig(generationInfoBo.getTableGenerationInfoBoList());
         //开始生成
-        return doGenerate(new GeneralSchema(author, packageName, optionalSchema, tableSchemas));
+        return doGenerate(SchemaBuilder.BuildFromRequestConfig(generationInfoBo));
     }
 
 
     public List<StringWriterResultBo> generateByDefault(GenerationInfoBo generationInfoBo){
-        OptionalSchema optionalSchema = new OptionalSchema(generationInfoBo.getOptionalGenerationBo().getIgnoreThreadPool(),
-                                                        generationInfoBo.getOptionalGenerationBo().getIgnoreLogInterceptor());
-
-        List<TableSchema> tableSchemas = SchemaBuilder.BuildDefaultSchema(generationInfoBo.getTableGenerationInfoBoList());
-        GeneralSchema generalSchema = new GeneralSchema(generationInfoBo.getAuthor(),
-                generationInfoBo.getPackageName(), optionalSchema, tableSchemas);
-        return doGenerate(generalSchema);
+        return doGenerate(SchemaBuilder.BuildDefaultSchema(generationInfoBo));
     }
 
 

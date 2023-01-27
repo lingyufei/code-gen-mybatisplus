@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,7 +28,7 @@ public class GeneralSchema implements Schema{
         this.author = author;
         this.packageName = packageName;
         this.tableSchemaList = tableSchemaList;
-        optionalSchema = new OptionalSchema();
+        this.optionalSchema = new OptionalSchema();
     }
 
     public OptionalSchema getOptionalSchema() {
