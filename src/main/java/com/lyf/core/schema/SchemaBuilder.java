@@ -29,7 +29,8 @@ public class SchemaBuilder {
         String packageName = generationInfoBo.getPackageName();
         OptionalGenerationBo optionalGenerationBo = generationInfoBo.getOptionalGenerationBo();
         //构建Schema
-        OptionalSchema optionalSchema = new OptionalSchema(optionalGenerationBo.getIgnoreThreadPool(), optionalGenerationBo.getIgnoreLogInterceptor());
+        OptionalSchema optionalSchema = new OptionalSchema(optionalGenerationBo.getIgnoreThreadPool(),
+                optionalGenerationBo.getIgnoreLogInterceptor(), optionalGenerationBo.getIgnoreRedis());
         List<TableSchema> tableSchemas = BuildFromRequestConfig(generationInfoBo.getTableGenerationInfoBoList());
         return new GeneralSchema(author, packageName, optionalSchema, tableSchemas);
     }
@@ -92,7 +93,8 @@ public class SchemaBuilder {
      */
     public static GeneralSchema BuildDefaultSchema(GenerationInfoBo generationInfoBo){
         OptionalSchema optionalSchema = new OptionalSchema(generationInfoBo.getOptionalGenerationBo().getIgnoreThreadPool(),
-                generationInfoBo.getOptionalGenerationBo().getIgnoreLogInterceptor());
+                generationInfoBo.getOptionalGenerationBo().getIgnoreLogInterceptor(),
+                generationInfoBo.getOptionalGenerationBo().getIgnoreRedis());
 
         List<TableSchema> tableSchemas = SchemaBuilder.BuildDefaultSchema(generationInfoBo.getTableGenerationInfoBoList());
         return new GeneralSchema(generationInfoBo.getAuthor(),

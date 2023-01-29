@@ -20,12 +20,10 @@ public class CommonTemplateTemplateGenerator extends AbstractTemplateGenerator {
 
     public static final String Folder = Constant.FREEMARKER_TEMPLATE_COMMON_FOLDER_PATH;
 
-
     @Override
     public List<StringWriterResultBo> generate(GeneralSchema generalSchema) {
         log.info("begin to generateCommonTemplates");
-        List<TableSchema> tableSchemaList = generalSchema.getTableSchemaList();
-        String packagePath = tableSchemaList.get(0).getPackagePath();
+        String packagePath = generalSchema.getPackagePath();
 
         List<StringWriterResultBo> result = new ArrayList<>();
         Map<String, File> fileMap = getFileMapUnderFolder(Folder);
@@ -35,7 +33,7 @@ public class CommonTemplateTemplateGenerator extends AbstractTemplateGenerator {
             //Final name
             String generationPath = entry.getKey().replaceAll("\\$\\{packageName}", packagePath);
 
-            Optional<StringWriter> optional = FreeMarkerGenerator.Generate(tableSchemaList.get(0), FileUtils.GetRelativePath(file, new File(Constant.FREEMARKER_TEMPLATE_FOLDER)));
+            Optional<StringWriter> optional = FreeMarkerGenerator.Generate(generalSchema, FileUtils.GetRelativePath(file, new File(Constant.FREEMARKER_TEMPLATE_FOLDER)));
             optional.ifPresent(e ->{
                 result.add(new StringWriterResultBo(generationPath, e));
             });

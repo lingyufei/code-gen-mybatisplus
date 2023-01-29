@@ -23,8 +23,7 @@ public class OptionalTemplateTemplateGenerator extends AbstractTemplateGenerator
     @Override
     public List<StringWriterResultBo> generate(GeneralSchema generalSchema) {
         log.info("begin to generateCommonTemplates");
-        List<TableSchema> tableSchemaList = generalSchema.getTableSchemaList();
-        String packagePath = tableSchemaList.get(0).getPackagePath();
+        String packagePath = generalSchema.getPackagePath();
 
         List<StringWriterResultBo> result = new ArrayList<>();
         Map<String, File> fileMap = getFileMapUnderFolder(Folder);
@@ -36,7 +35,7 @@ public class OptionalTemplateTemplateGenerator extends AbstractTemplateGenerator
                 //Final name
                 String generationPath = entry.getKey().replaceAll("\\$\\{packageName}", packagePath);
 
-                Optional<StringWriter> optional = FreeMarkerGenerator.Generate(tableSchemaList.get(0), FileUtils.GetRelativePath(file, new File(Constant.FREEMARKER_TEMPLATE_FOLDER)));
+                Optional<StringWriter> optional = FreeMarkerGenerator.Generate(generalSchema, FileUtils.GetRelativePath(file, new File(Constant.FREEMARKER_TEMPLATE_FOLDER)));
                 optional.ifPresent(e ->{
                     result.add(new StringWriterResultBo(generationPath, e));
                 });
@@ -52,6 +51,9 @@ public class OptionalTemplateTemplateGenerator extends AbstractTemplateGenerator
         }
         if(file.getName().contains("ThreadPool.java.ftl")){
             return !generalSchema.getOptionalSchema().getIgnoreThreadPool();
+        }
+        if(file.getName().contains("RedisConfig.java.ftl")){
+            return !generalSchema.getOptionalSchema().getIgnoreRedis();
         }
         //不匹配，配置中无此模板，生成
         return false;

@@ -13,4 +13,7 @@ public class OptionalConfigRequest {
 
     //日志aop打印
     private Boolean ignoreLogInterceptor = false;
+
+    //Redis配置
+    private Boolean ignoreRedis = false;
 }

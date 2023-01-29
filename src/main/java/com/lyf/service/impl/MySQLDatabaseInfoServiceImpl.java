@@ -107,7 +107,8 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
                     new TableGenerationInfoBo(tableName, tableConfigRequest, tableInfoEntity, columnInfoEntities, author, packageName));
         }
 
-        OptionalGenerationBo optionalGenerationBo = new OptionalGenerationBo(optionalConfigRequest.getIgnoreThreadPool(), optionalConfigRequest.getIgnoreLogInterceptor());
+        OptionalGenerationBo optionalGenerationBo = new OptionalGenerationBo(optionalConfigRequest.getIgnoreThreadPool(),
+                optionalConfigRequest.getIgnoreLogInterceptor(), optionalConfigRequest.getIgnoreRedis());
         GenerationInfoBo generationInfoBo = new GenerationInfoBo(packageName, author, optionalGenerationBo, generationRequestInfos);
 
         List<StringWriterResultBo> resultToList = generatorFacade.generateByRequest(generationInfoBo);
@@ -141,7 +142,8 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
                     new TableGenerationInfoBo(tableName, null, tableInfoEntity, columnInfoEntities, packageName, author));
         }
 
-        OptionalGenerationBo optionalGenerationBo = new OptionalGenerationBo(optionalConfigRequest.getIgnoreThreadPool(), optionalConfigRequest.getIgnoreLogInterceptor());
+        OptionalGenerationBo optionalGenerationBo = new OptionalGenerationBo(optionalConfigRequest.getIgnoreThreadPool(),
+                optionalConfigRequest.getIgnoreLogInterceptor(), optionalConfigRequest.getIgnoreRedis());
         List<StringWriterResultBo> resultToList = generatorFacade.generateByDefault(new GenerationInfoBo(packageName, author, optionalGenerationBo, generationRequestInfos));
         return ZipFileSaver.Save(resultToList);
     }

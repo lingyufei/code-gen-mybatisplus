@@ -1,5 +1,6 @@
 package com.lyf.core.schema;
 
+import com.lyf.constant.Constant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -33,5 +34,13 @@ public class GeneralSchema implements Schema{
 
     public OptionalSchema getOptionalSchema() {
         return Optional.ofNullable(optionalSchema).orElse(new OptionalSchema());
+    }
+
+    public String getPackagePath() {
+        if(org.springframework.util.StringUtils.hasText(packageName)){
+            return packageName.replace(".", "/");
+        }else{
+            return  Constant.DEFAULT_PACKAGE.replace(".", "/");
+        }
     }
 }
