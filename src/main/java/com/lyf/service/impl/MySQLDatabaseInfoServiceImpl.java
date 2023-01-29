@@ -128,7 +128,7 @@ public class MySQLDatabaseInfoServiceImpl implements MySQLDatabaseInfoService {
             if(StringUtils.hasText(configRequest.getAuthor())){
                 author = configRequest.getAuthor();
             }
-            if(ObjectUtils.isEmpty(configRequest.getOptionalConfigRequest())){
+            if(!ObjectUtils.isEmpty(configRequest.getOptionalConfigRequest())){
                 optionalConfigRequest = configRequest.getOptionalConfigRequest();
             }
         }
