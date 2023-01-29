@@ -89,10 +89,9 @@ public class FileUtils {
 
     public static void ResponseFileToHttp(byte[] data, String fileName, HttpServletResponse response){
         response.reset();
-        response.setHeader("Content-Disposition", "attachment; filename=\"" + fileName + "\"");
+        response.setHeader("Content-Disposition", "attachment;filename=" + fileName);
         response.addHeader("Content-Length", "" + data.length);
-        response.setContentType("application/octet-stream; charset=UTF-8");
-
+        response.setContentType("application/octet-stream;charset=UTF-8");
         try {
             IOUtils.write(data, response.getOutputStream());
         }catch (IOException e) {

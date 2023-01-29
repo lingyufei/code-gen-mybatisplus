@@ -62,7 +62,7 @@ public class MySQLDatabaseInfoController {
      * @param configRequest
      * @param response
      */
-    @GetMapping("/generate/default")
+    @PostMapping("/generate/default")
     public void generateByDefault(@RequestBody(required = false) ConfigRequest configRequest, HttpServletResponse response){
         byte[] result = mySQLDatabaseInfoService.generateByDefault(configRequest);
         FileUtils.ResponseFileToHttp(result, "default_code_gen_result.zip", response);
