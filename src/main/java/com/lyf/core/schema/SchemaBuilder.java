@@ -137,7 +137,7 @@ public class SchemaBuilder {
         ColumnKeyTypeEnum columnKeyTypeEnum = ColumnKeyTypeEnum.getEnumByTypeWithDefault(columnInfoEntity.getColumnKey());
         boolean ignoreEntity = Optional.ofNullable(columnConfigRequest.getIgnoreEntity()).orElse(false);
         boolean ignoreRequest = Optional.ofNullable(columnConfigRequest.getIgnoreRequest()).orElse(false);
-        boolean ignoreResponse = Optional.ofNullable(columnConfigRequest.getIgnoreRequest()).orElse(false);
+        boolean ignoreResponse = Optional.ofNullable(columnConfigRequest.getIgnoreResponse()).orElse(false);
         boolean ignoreBo = Optional.ofNullable(columnConfigRequest.getIgnoreBo()).orElse(false);
 
         return new ColumnSchema(columnInfoEntity.getColumnName(), dataType,
