@@ -30,15 +30,23 @@ public class MySQLDatabaseInfoController {
     @Resource
     MySQLDatabaseInfoService mySQLDatabaseInfoService;
 
+    @GetMapping
+    public R queryTableList(){
+        List<String> databases = mySQLDatabaseInfoService.queryAllDatabases();
+        return R.ok().put("data", databases);
+    }
+
     @GetMapping("/table/list")
-    public R queryTableList(@RequestParam(name = "tableName", required = false) String fuzzy){
-        List<TableInfoResponse> tableInfoResponses = mySQLDatabaseInfoService.queryAllTable(fuzzy);
+    public R queryTableList(@RequestParam(name = "tableName", required = false) String fuzzy,
+                            @RequestParam(name = "db") String db){
+        List<TableInfoResponse> tableInfoResponses = mySQLDatabaseInfoService.queryAllTable(db, fuzzy);
         return R.ok().put("data", tableInfoResponses);
     }
 
     @GetMapping("/column/list")
-    public R queryColumnOfAllTables(@RequestParam(name = "tables", required = false) List<String> tables){
-        Map<String, List<ColumnInfoResponse>> map = mySQLDatabaseInfoService.queryColumnsOfAllTables(tables);
+    public R queryColumnOfAllTables(@RequestParam(name = "tables", required = false) List<String> tables,
+                                    @RequestParam(name = "db") String db){
+        Map<String, List<ColumnInfoResponse>> map = mySQLDatabaseInfoService.queryColumnsOfAllTables(db, tables);
         return R.ok().put("data", map);
     }
 

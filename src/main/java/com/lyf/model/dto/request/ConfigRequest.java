@@ -13,6 +13,7 @@ import java.util.Optional;
 public class ConfigRequest {
     private String packageName;
     private String author;
+    private String db;
     private OptionalConfigRequest optionalConfigRequest;
     private List<TableConfigRequest> tableConfigRequestList;
 }

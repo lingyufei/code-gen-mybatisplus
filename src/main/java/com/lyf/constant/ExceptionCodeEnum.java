@@ -7,6 +7,7 @@ public enum ExceptionCodeEnum {
 
     //10开头，表单相关异常
     FORM_VALID_EXCEPTION(1000, "您填写的表单格式不合法或未填写完整"),//表单校验异常
+    DB_CONFIG_EMPTY_EXCEPTION(1001, "未指定数据库"),//表单校验异常
 
     //20开头，数据库通用异常
     DB_DUPLICATE_KEY_EXCEPTION(2001, "您要添加的数据已存在"),

@@ -33,13 +33,13 @@ class CodeGenMybatisplusApplicationTests {
 //        TableInfoEntity tableInfoEntity = mySQLDatabaseInfoService.queryTable("user_info");
 //        System.out.println(tableInfoEntity);
 
-        List<TableInfoResponse> tableInfoResponses = mySQLDatabaseInfoService.queryAllTable(null);
+        List<TableInfoResponse> tableInfoResponses = mySQLDatabaseInfoService.queryAllTable("uiqa", null);
         System.out.println(tableInfoResponses);
     }
 
     @Test
     void testColumnService(){
-        List<ColumnInfoResponse> columnInfoResponses = mySQLDatabaseInfoService.queryColumnsOfTable("user_info");
+        List<ColumnInfoResponse> columnInfoResponses = mySQLDatabaseInfoService.queryColumnsOfTable("uiqa", "user_info");
         System.out.println(columnInfoResponses);
     }
 
@@ -47,8 +47,8 @@ class CodeGenMybatisplusApplicationTests {
     FreeMarkerGenerator freeMarkerGenerator;
     @Test
     void testFreeMarker(){
-        TableInfoEntity tableInfoEntity = mySQLDatabaseInfoDao.queryTable("user_info");
-        List<ColumnInfoEntity> columnInfoEntities = mySQLDatabaseInfoDao.queryColumns("user_info");
+        TableInfoEntity tableInfoEntity = mySQLDatabaseInfoDao.queryTable("uiqa","user_info");
+        List<ColumnInfoEntity> columnInfoEntities = mySQLDatabaseInfoDao.queryColumns("uiqa","user_info");
         TableGenerationInfoBo requestInfoTo = new TableGenerationInfoBo("user_info", null, tableInfoEntity, columnInfoEntities, Constant.DEFAULT_PACKAGE, Constant.DEFAULT_AUTHOR);
 
         TableSchema tableSchema = SchemaBuilder.BuildDefaultSchema(requestInfoTo);

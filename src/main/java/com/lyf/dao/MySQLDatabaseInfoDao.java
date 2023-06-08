@@ -17,10 +17,12 @@ import java.util.Map;
  */
 @Mapper
 public interface MySQLDatabaseInfoDao {
-    List<TableInfoEntity> queryList(@Param("tableName") String tableName);
+    List<TableInfoEntity> queryList(@Param("db") String db, @Param("tableName") String tableName);
 
-    TableInfoEntity queryTable(@Param("tableName") String tableName);
+    TableInfoEntity queryTable(@Param("db") String db, @Param("tableName") String tableName);
 
-    List<ColumnInfoEntity> queryColumns(String tableName);
+    List<ColumnInfoEntity> queryColumns(@Param("db") String db, @Param("tableName") String tableName);
+
+    List<String> queryAllDatabases();
 
 }
